@@ -501,20 +501,23 @@ body {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    gap: 10px;
-    padding: 10px 12px;
+    gap: 4px;
+    padding: 10px 6px;
     font-size: 0.95rem;
   }
 
-  .skill-item img,
+  .skill-item img{
+      width: 30px;
+    height:30px;
+  }
   .skill-item i {
-    width: 30px;
-    height: 30px;
+    width: 10px;
+    height:10px;
     flex-shrink: 0;
   }
 
   .skill-item span {
-    margin-left: 8px;
+    margin-left: 2px;
     margin-right: auto; /* النص يبقى فالنص بين الأيقونة والنجوم */
     font-size: 0.95rem;
     text-align: left;
@@ -550,17 +553,35 @@ body {
   /* Contact */
   .contact-grid {
     grid-template-columns: 1fr;
-    gap: 25px;
+    gap: 20px;
   }
 
   .contact-form {
-    padding: 25px 20px;
+    padding: 10px 10px;
+    width: auto;
+    height: auto;
   }
 
   .contact-info {
     padding: 20px 16px;
   }
+
+    /* ✅ Contact icons – نفس ستيل skills فالموبايل */
+  .contact-details div {
+    gap: 8px;
+    font-size: 0.95rem;   /* النص مايبقاش كبير بزاف */
+  }
+
+  .contact-details i {
+    width: 30px;
+    height: 30px;
+    font-size: 0.9rem;    /* حجم الآيقونة نفسها */
+    flex-shrink: 0;       /* باش ما تضغطش فالصغر */
+  }
+
 }
+
+
 
 /* تليفونات صغار بزاف */
 @media (max-width: 480px) {
