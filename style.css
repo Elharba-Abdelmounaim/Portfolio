@@ -410,7 +410,6 @@ body {
   .hero h1 { font-size:3.5rem; }
 }
 
-
 /* ===================== */
 /* 📱 Responsive – Mobile */
 /* ===================== */
@@ -489,13 +488,41 @@ body {
     gap: 24px;
   }
 
-  /* Skills box */
+  /* ✅ Skills – منظمين فالموبايل */
+  .skills-grid {
+    padding: 0 8px;
+  }
+
   .skill-category {
-    padding: 20px;
+    padding: 18px;
   }
 
   .skill-item {
-    font-size: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    padding: 10px 12px;
+    font-size: 0.95rem;
+  }
+
+  .skill-item img,
+  .skill-item i {
+    width: 30px;
+    height: 30px;
+    flex-shrink: 0;
+  }
+
+  .skill-item span {
+    margin-left: 8px;
+    margin-right: auto; /* النص يبقى فالنص بين الأيقونة والنجوم */
+    font-size: 0.95rem;
+    text-align: left;
+  }
+
+  .stars {
+    font-size: 1.1rem;
+    letter-spacing: 2px;
   }
 
   /* Timeline */
@@ -563,5 +590,19 @@ body {
 
   .section-title {
     font-size: 2rem;
+  }
+
+  /* Skills أصغر شوية فالشاشات الصغيرة بزاف */
+  .skill-item {
+    padding: 8px 10px;
+    gap: 8px;
+  }
+
+  .skill-item span {
+    font-size: 0.9rem;
+  }
+
+  .stars {
+    font-size: 1rem;
   }
 }
