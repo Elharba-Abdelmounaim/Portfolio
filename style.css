@@ -186,7 +186,7 @@ body {
 
 /* Stars Rating */
 .stars {
-  color: #ffd700; /* ذهبية */
+  color: #ffd700; 
   letter-spacing: 3px;
   font-size: 1.4rem;
   display: flex;
@@ -225,7 +225,7 @@ body {
   padding: 20px 0;
 }
 
-/* الكارت كامل */
+
 .project-item {
   background: linear-gradient(180deg, #050b2e, #050b2e);
   border-radius: 22px;
@@ -243,7 +243,6 @@ body {
   box-shadow: 0 30px 70px rgba(0,255,255,0.15);
 }
 
-/* الصورة */
 .project-img {
   width: 100%;
   height: 360px;
@@ -251,14 +250,13 @@ body {
   background: #000;
 }
 
-/* المعلومة تحت */
 .project-info {
   padding: 16px;
   text-align: center;
   background: linear-gradient(180deg, #050b2e, #040824);
 }
 
-/* العنوان */
+
 .project-info p:first-child {
   font-size: 0.95rem;
   font-weight: 600;
@@ -266,7 +264,6 @@ body {
   margin-bottom: 6px;
 }
 
-/*  View */
 .project-info a {
   font-size: 0.9rem;
   color: #00ffff;
@@ -411,10 +408,9 @@ body {
 }
 
 /* ===================== */
-/* 📱 Responsive – Mobile */
+/*  Responsive – Mobile */
 /* ===================== */
 
-/* تابلت و تليفونات كبار شوية */
 @media (max-width: 768px) {
 
   html {
@@ -436,7 +432,7 @@ body {
 
   /* Hero */
   .hero {
-    padding: 100px 20px 60px; /* باش ما يتخباّش تحت navbar */
+    padding: 100px 20px 60px; 
     gap: 25px;
     text-align: center;
   }
@@ -470,7 +466,7 @@ body {
     margin-top: 10px;
   }
 
-  /* Sections عامة */
+
   .section {
     padding: 70px 20px;
   }
@@ -480,7 +476,7 @@ body {
     margin-bottom: 40px;
   }
 
-  /* Projects / Skills / Certificates = كولون وحدة */
+
   .projects-grid,
   .skills-grid,
   .project-grid {
@@ -488,7 +484,7 @@ body {
     gap: 24px;
   }
 
-  /* ✅ Skills – منظمين فالموبايل */
+ 
   .skills-grid {
     padding: 0 8px;
   }
@@ -518,7 +514,7 @@ body {
 
   .skill-item span {
     margin-left: 2px;
-    margin-right: auto; /* النص يبقى فالنص بين الأيقونة والنجوم */
+    margin-right: auto; 
     font-size: 0.95rem;
     text-align: left;
   }
@@ -566,24 +562,24 @@ body {
     padding: 20px 16px;
   }
 
-    /* ✅ Contact icons – نفس ستيل skills فالموبايل */
+
   .contact-details div {
     gap: 8px;
-    font-size: 0.95rem;   /* النص مايبقاش كبير بزاف */
+    font-size: 0.95rem;  
   }
 
   .contact-details i {
     width: 30px;
     height: 30px;
-    font-size: 0.9rem;    /* حجم الآيقونة نفسها */
-    flex-shrink: 0;       /* باش ما تضغطش فالصغر */
+    font-size: 0.9rem;  
+    flex-shrink: 0;      
   }
 
 }
 
 
 
-/* تليفونات صغار بزاف */
+
 @media (max-width: 480px) {
 
   .hero {
@@ -613,7 +609,6 @@ body {
     font-size: 2rem;
   }
 
-  /* Skills أصغر شوية فالشاشات الصغيرة بزاف */
   .skill-item {
     padding: 8px 10px;
     gap: 8px;
