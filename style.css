@@ -1,6 +1,12 @@
 /* ===== style.css – 3D Premium Portfolio ===== */
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap');
 
+:root {
+  --glass: rgba(10, 10, 40, 0.85);
+  --neon-cyan: #00ffff;
+  --neon-purple: #8a2be2;
+}
+
 * { margin:0; padding:0; box-sizing:border-box; }
 body {
   font-family: 'Poppins', sans-serif;
@@ -402,4 +408,160 @@ body {
   .nav-links.active { right:0; }
   .hero { flex-direction:column; text-align:center; }
   .hero h1 { font-size:3.5rem; }
+}
+
+
+/* ===================== */
+/* 📱 Responsive – Mobile */
+/* ===================== */
+
+/* تابلت و تليفونات كبار شوية */
+@media (max-width: 768px) {
+
+  html {
+    font-size: 90%;
+  }
+
+  body {
+    overflow-x: hidden;
+  }
+
+  /* Navbar */
+  .navbar {
+    padding: 12px 18px;
+  }
+
+  .logo img {
+    height: 45px;
+  }
+
+  /* Hero */
+  .hero {
+    padding: 100px 20px 60px; /* باش ما يتخباّش تحت navbar */
+    gap: 25px;
+    text-align: center;
+  }
+
+  .hero-content {
+    max-width: 100%;
+  }
+
+  .hero h1 {
+    font-size: 2.4rem;
+    line-height: 1.2;
+  }
+
+  .typing {
+    font-size: 1.4rem;
+    height: auto;
+    border-right-width: 2px;
+  }
+
+  .desc {
+    font-size: 0.95rem;
+    margin-top: 10px;
+  }
+
+  .hero-buttons {
+    justify-content: center;
+  }
+
+  .hero-img img {
+    width: 260px;
+    margin-top: 10px;
+  }
+
+  /* Sections عامة */
+  .section {
+    padding: 70px 20px;
+  }
+
+  .section-title {
+    font-size: 2.3rem;
+    margin-bottom: 40px;
+  }
+
+  /* Projects / Skills / Certificates = كولون وحدة */
+  .projects-grid,
+  .skills-grid,
+  .project-grid {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+
+  /* Skills box */
+  .skill-category {
+    padding: 20px;
+  }
+
+  .skill-item {
+    font-size: 1rem;
+  }
+
+  /* Timeline */
+  .timeline::after {
+    left: 20px;
+  }
+
+  .tl-item {
+    width: 100%;
+    padding-left: 60px;
+    padding-right: 20px;
+  }
+
+  .tl-item.left,
+  .tl-item.right {
+    left: 0;
+  }
+
+  .tl-item::after,
+  .right::after {
+    left: 12px;
+    right: auto;
+  }
+
+  /* Contact */
+  .contact-grid {
+    grid-template-columns: 1fr;
+    gap: 25px;
+  }
+
+  .contact-form {
+    padding: 25px 20px;
+  }
+
+  .contact-info {
+    padding: 20px 16px;
+  }
+}
+
+/* تليفونات صغار بزاف */
+@media (max-width: 480px) {
+
+  .hero {
+    padding-top: 90px;
+  }
+
+  .hero h1 {
+    font-size: 2rem;
+  }
+
+  .typing {
+    font-size: 1.2rem;
+  }
+
+  .btn-primary,
+  .btn-secondary {
+    padding: 10px 22px;
+    font-size: 0.9rem;
+  }
+
+  .project-card img,
+  .project-img {
+    height: 220px;
+  }
+
+  .section-title {
+    font-size: 2rem;
+  }
 }
