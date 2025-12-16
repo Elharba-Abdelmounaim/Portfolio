@@ -15,20 +15,78 @@
 <body>
 
   <!-- Navbar -->
-  <nav class="navbar" id="navbar">
-    <div class="logo">
-      <img src="image/harba.png" alt="Logo"/>
-    </div>
-    <ul class="nav-links">
-      <li><a href="#home" class="active">Home</a></li>
-      <li><a href="#projects">Projects</a></li>
-      <li><a href="#skills">Skills</a></li>
-      <li><a href="#timeline">Experience</a></li>
-      <li><a href="#certificates">Certificates</a></li>
-      <li><a href="#contact">Contact</a></li>
-    </ul>
-    <div class="hamburger"><i class="fas fa-bars"></i></div>
-  </nav>
+      <nav class="navbar glass-navbar" id="navbar">
+        <div class="nav-container">
+            <!-- الشعار مع تأثير glow -->
+            <div class="logo">
+                <div class="logo-glow"></div>
+                <img src="image/harba.png" alt="ELHARBA Logo" class="logo-img"/>
+                <span class="logo-text">ELHARBA</span>
+            </div>
+
+            <!-- روابط التنقل -->
+            <ul class="nav-links">
+                <li>
+                    <a href="#home" class="nav-link active">
+                        <i class="fas fa-home"></i>
+                        <span>Home</span>
+                        <div class="link-indicator"></div>
+                    </a>
+                </li>
+                <li>
+                    <a href="#projects" class="nav-link">
+                        <i class="fas fa-code"></i>
+                        <span>Projects</span>
+                        <div class="link-indicator"></div>
+                    </a>
+                </li>
+                <li>
+                    <a href="#skills" class="nav-link">
+                        <i class="fas fa-cogs"></i>
+                        <span>Skills</span>
+                        <div class="link-indicator"></div>
+                    </a>
+                </li>
+                <li>
+                    <a href="#timeline" class="nav-link">
+                        <i class="fas fa-briefcase"></i>
+                        <span>Experience</span>
+                        <div class="link-indicator"></div>
+                    </a>
+                </li>
+                <li>
+                    <a href="#certificates" class="nav-link">
+                        <i class="fas fa-certificate"></i>
+                        <span>Certificates</span>
+                        <div class="link-indicator"></div>
+                    </a>
+                </li>
+                <li>
+                    <a href="#contact" class="nav-link">
+                        <i class="fas fa-envelope"></i>
+                        <span>Contact</span>
+                        <div class="link-indicator"></div>
+                    </a>
+                </li>
+            </ul>
+
+            <!-- زر القائمة المنسدلة للجوال -->
+            <div class="nav-actions">
+                
+                <div class="hamburger" id="hamburger">
+                    <div class="line"></div>
+                    <div class="line"></div>
+                    <div class="line"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- تأثير خلفي للـ Glass Morphism -->
+        <div class="navbar-backdrop"></div>
+        
+        <!-- خط متحرك تحت النافبار -->
+        <div class="nav-line"></div>
+    </nav>
 
   <!-- Hero -->
   <section id="home" class="hero">
@@ -381,139 +439,834 @@
 
     </div>
   </section>
+<!-- Certificates Section -->
+<section id="certificates" class="section certificates-section">
+    <!-- Background Elements -->
+    <div class="certificates-bg">
+        <div class="cert-bg-shape cert-shape-1"></div>
+        <div class="cert-bg-shape cert-shape-2"></div>
+        <div class="cert-bg-shape cert-shape-3"></div>
+        <div class="cert-grid-pattern"></div>
+    </div>
+    
+    <div class="container">
+        <h2 class="section-title glass-title">
+            <span class="title-text">Certificates & Achievements</span>
+            <span class="title-line"></span>
+            <p class="section-subtitle">Validated skills and professional accomplishments</p>
+        </h2>
 
-  <!-- Certificates -->
-  <section id="certificates" class="section bg-dark">
-  <h2 class="section-title">Certificates</h2>
+        <!-- Filter Tabs -->
+        <div class="certificate-filters glass-card">
+            <button class="filter-btn active" data-filter="all">
+                <i class="fas fa-layer-group"></i> All Certificates
+            </button>
+            <button class="filter-btn" data-filter="tech">
+                <i class="fas fa-code"></i> Technical
+            </button>
+            <button class="filter-btn" data-filter="ai">
+                <i class="fas fa-brain"></i> AI & Data
+            </button>
+            <button class="filter-btn" data-filter="office">
+                <i class="fas fa-file-alt"></i> Office Suite
+            </button>
+            <button class="filter-btn" data-filter="academic">
+                <i class="fas fa-graduation-cap"></i> Academic
+            </button>
+        </div>
 
-  <div class="project-grid">
+        <!-- Certificates Grid -->
+        <div class="certificates-grid" id="certificatesGrid">
+            <!-- Professional Foundations -->
+            <div class="certificate-item glass-card" data-category="tech" data-year="2025">
+                <div class="certificate-header">
+                    <div class="cert-badge">
+                        <i class="fas fa-award"></i>
+                        <span class="badge-text">Professional</span>
+                    </div>
+                    <div class="cert-date">2025</div>
+                </div>
+                
+                <div class="certificate-image">
+                    <img src="image/89-professional-foundations-certificate-abdelmounaim-elharba (1).png" 
+                         alt="Professional Foundations Certificate" 
+                         class="cert-img">
+                    <div class="cert-overlay">
+                        <button class="view-cert-btn" 
+                                data-title="Professional Foundations" 
+                                data-issuer="ALX Africa"
+                                data-year="2025"
+                                data-image="image/89-professional-foundations-certificate-abdelmounaim-elharba (1).png"
+                                data-verify="https://savanna.alxafrica.com/certificates/3E2HsL9x7C">
+                            <i class="fas fa-expand"></i>
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="certificate-content">
+                    <h3 class="cert-title">Professional Foundations</h3>
+                    <p class="cert-issuer">
+                        <i class="fas fa-building"></i> ALX Africa
+                    </p>
+                    <div class="cert-tags">
+                        <span class="cert-tag">Soft Skills</span>
+                        <span class="cert-tag">Career Development</span>
+                    </div>
+                    <div class="cert-actions">
+                        <a href="https://savanna.alxafrica.com/certificates/3E2HsL9x7C" 
+                           target="_blank" 
+                           class="verify-btn">
+                            <i class="fas fa-shield-check"></i> Verify Online
+                        </a>
+                        <button class="quick-view-btn">
+                            <i class="fas fa-eye"></i> Quick View
+                        </button>
+                    </div>
+                </div>
+            </div>
 
-    <div class="project-item fade-in-up-item" onclick="openModal('Professional Foundations', 'ALX Africa', '2025')">
-      <img class="project-img" src="image/89-professional-foundations-certificate-abdelmounaim-elharba (1).png" alt="">
-      <div class="project-info">
-        <p>Professional Foundations</p>
-        <p><a href="https://savanna.alxafrica.com/certificates/3E2HsL9x7C" target="_blank">View</a></p>
-      </div>
+            <!-- ALX AI Starter Kit -->
+            <div class="certificate-item glass-card" data-category="ai" data-year="2025">
+                <div class="certificate-header">
+                    <div class="cert-badge ai-badge">
+                        <i class="fas fa-robot"></i>
+                        <span class="badge-text">AI</span>
+                    </div>
+                    <div class="cert-date">2025</div>
+                </div>
+                
+                <div class="certificate-image">
+                    <img src="image/113-alx-ai-starter-kit-certificate-abdelmounaim-elharba.png" 
+                         alt="ALX AI Starter Kit Certificate" 
+                         class="cert-img">
+                    <div class="cert-overlay">
+                        <button class="view-cert-btn"
+                                data-title="ALX AI Starter Kit"
+                                data-issuer="ALX Africa"
+                                data-year="2025"
+                                data-image="image/113-alx-ai-starter-kit-certificate-abdelmounaim-elharba.png">
+                            <i class="fas fa-expand"></i>
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="certificate-content">
+                    <h3 class="cert-title">ALX AI Starter Kit</h3>
+                    <p class="cert-issuer">
+                        <i class="fas fa-building"></i> ALX Africa
+                    </p>
+                    <div class="cert-tags">
+                        <span class="cert-tag">Artificial Intelligence</span>
+                        <span class="cert-tag">Machine Learning</span>
+                    </div>
+                    <div class="cert-actions">
+                        <button class="verify-btn disabled">
+                            <i class="fas fa-shield-alt"></i> Self Certified
+                        </button>
+                        <button class="quick-view-btn">
+                            <i class="fas fa-eye"></i> Quick View
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ALX AI Career Essentials -->
+            <div class="certificate-item glass-card" data-category="ai" data-year="2025">
+                <div class="certificate-header">
+                    <div class="cert-badge ai-badge">
+                        <i class="fas fa-brain"></i>
+                        <span class="badge-text">AI</span>
+                    </div>
+                    <div class="cert-date">2025</div>
+                </div>
+                
+                <div class="certificate-image">
+                    <img src="image/73-alx-aice-ai-career-essentials-certificate-abdelmounaim-elharba.png" 
+                         alt="ALX AI Career Essentials Certificate" 
+                         class="cert-img">
+                    <div class="cert-overlay">
+                        <button class="view-cert-btn"
+                                data-title="ALX AI Career Essentials"
+                                data-issuer="ALX Africa"
+                                data-year="2025"
+                                data-image="image/73-alx-aice-ai-career-essentials-certificate-abdelmounaim-elharba.png">
+                            <i class="fas fa-expand"></i>
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="certificate-content">
+                    <h3 class="cert-title">AI Career Essentials</h3>
+                    <p class="cert-issuer">
+                        <i class="fas fa-building"></i> ALX Africa
+                    </p>
+                    <div class="cert-tags">
+                        <span class="cert-tag">Career Development</span>
+                        <span class="cert-tag">AI Fundamentals</span>
+                    </div>
+                    <div class="cert-actions">
+                        <button class="verify-btn disabled">
+                            <i class="fas fa-shield-alt"></i> Self Certified
+                        </button>
+                        <button class="quick-view-btn">
+                            <i class="fas fa-eye"></i> Quick View
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Algorithm Certificate -->
+            <div class="certificate-item glass-card" data-category="tech" data-year="2024">
+                <div class="certificate-header">
+                    <div class="cert-badge">
+                        <i class="fas fa-calculator"></i>
+                        <span class="badge-text">Technical</span>
+                    </div>
+                    <div class="cert-date">2024</div>
+                </div>
+                
+                <div class="certificate-image">
+                    <img src="image/ALGORITM.jpg" 
+                         alt="Algorithm Certificate" 
+                         class="cert-img">
+                    <div class="cert-overlay">
+                        <button class="view-cert-btn"
+                                data-title="Algorithm Certificate"
+                                data-issuer="Local Institute"
+                                data-year="2024"
+                                data-image="image/ALGORITM.jpg">
+                            <i class="fas fa-expand"></i>
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="certificate-content">
+                    <h3 class="cert-title">Algorithm & Programming</h3>
+                    <p class="cert-issuer">
+                        <i class="fas fa-university"></i> Local Institute
+                    </p>
+                    <div class="cert-tags">
+                        <span class="cert-tag">Algorithms</span>
+                        <span class="cert-tag">Programming Logic</span>
+                    </div>
+                    <div class="cert-actions">
+                        <button class="verify-btn disabled">
+                            <i class="fas fa-file-certificate"></i> Hard Copy
+                        </button>
+                        <button class="quick-view-btn">
+                            <i class="fas fa-eye"></i> Quick View
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Microsoft Excel 2016 -->
+            <div class="certificate-item glass-card" data-category="office" data-year="2024">
+                <div class="certificate-header">
+                    <div class="cert-badge office-badge">
+                        <i class="fas fa-file-excel"></i>
+                        <span class="badge-text">MS Office</span>
+                    </div>
+                    <div class="cert-date">2024</div>
+                </div>
+                
+                <div class="certificate-image">
+                    <img src="image/Office Excel 2016_page-0001.jpg" 
+                         alt="Microsoft Excel Certificate" 
+                         class="cert-img">
+                    <div class="cert-overlay">
+                        <button class="view-cert-btn"
+                                data-title="Microsoft Excel 2016"
+                                data-issuer="Microsoft"
+                                data-year="2024"
+                                data-image="image/Office Excel 2016_page-0001.jpg">
+                            <i class="fas fa-expand"></i>
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="certificate-content">
+                    <h3 class="cert-title">Microsoft Excel 2016</h3>
+                    <p class="cert-issuer">
+                        <i class="fab fa-microsoft"></i> Microsoft
+                    </p>
+                    <div class="cert-tags">
+                        <span class="cert-tag">Spreadsheets</span>
+                        <span class="cert-tag">Data Analysis</span>
+                    </div>
+                    <div class="cert-actions">
+                        <button class="verify-btn disabled">
+                            <i class="fas fa-certificate"></i> Official
+                        </button>
+                        <button class="quick-view-btn">
+                            <i class="fas fa-eye"></i> Quick View
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Microsoft PowerPoint 2016 -->
+            <div class="certificate-item glass-card" data-category="office" data-year="2024">
+                <div class="certificate-header">
+                    <div class="cert-badge office-badge">
+                        <i class="fas fa-file-powerpoint"></i>
+                        <span class="badge-text">MS Office</span>
+                    </div>
+                    <div class="cert-date">2024</div>
+                </div>
+                
+                <div class="certificate-image">
+                    <img src="image/Office PowerPoint 2016_page-0001.jpg" 
+                         alt="Microsoft PowerPoint Certificate" 
+                         class="cert-img">
+                    <div class="cert-overlay">
+                        <button class="view-cert-btn"
+                                data-title="Microsoft PowerPoint 2016"
+                                data-issuer="Microsoft"
+                                data-year="2024"
+                                data-image="image/Office PowerPoint 2016_page-0001.jpg">
+                            <i class="fas fa-expand"></i>
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="certificate-content">
+                    <h3 class="cert-title">Microsoft PowerPoint 2016</h3>
+                    <p class="cert-issuer">
+                        <i class="fab fa-microsoft"></i> Microsoft
+                    </p>
+                    <div class="cert-tags">
+                        <span class="cert-tag">Presentations</span>
+                        <span class="cert-tag">Design</span>
+                    </div>
+                    <div class="cert-actions">
+                        <button class="verify-btn disabled">
+                            <i class="fas fa-certificate"></i> Official
+                        </button>
+                        <button class="quick-view-btn">
+                            <i class="fas fa-eye"></i> Quick View
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Microsoft Word 2016 -->
+            <div class="certificate-item glass-card" data-category="office" data-year="2024">
+                <div class="certificate-header">
+                    <div class="cert-badge office-badge">
+                        <i class="fas fa-file-word"></i>
+                        <span class="badge-text">MS Office</span>
+                    </div>
+                    <div class="cert-date">2024</div>
+                </div>
+                
+                <div class="certificate-image">
+                    <img src="image/Office Word 2016_page-0001.jpg" 
+                         alt="Microsoft Word Certificate" 
+                         class="cert-img">
+                    <div class="cert-overlay">
+                        <button class="view-cert-btn"
+                                data-title="Microsoft Word 2016"
+                                data-issuer="Microsoft"
+                                data-year="2024"
+                                data-image="image/Office Word 2016_page-0001.jpg">
+                            <i class="fas fa-expand"></i>
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="certificate-content">
+                    <h3 class="cert-title">Microsoft Word 2016</h3>
+                    <p class="cert-issuer">
+                        <i class="fab fa-microsoft"></i> Microsoft
+                    </p>
+                    <div class="cert-tags">
+                        <span class="cert-tag">Document Editing</span>
+                        <span class="cert-tag">Writing</span>
+                    </div>
+                    <div class="cert-actions">
+                        <button class="verify-btn disabled">
+                            <i class="fas fa-certificate"></i> Official
+                        </button>
+                        <button class="quick-view-btn">
+                            <i class="fas fa-eye"></i> Quick View
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Brevet de Technicien Supérieur -->
+            <div class="certificate-item glass-card" data-category="academic" data-year="2025">
+                <div class="certificate-header">
+                    <div class="cert-badge academic-badge">
+                        <i class="fas fa-graduation-cap"></i>
+                        <span class="badge-text">Academic</span>
+                    </div>
+                    <div class="cert-date">2025</div>
+                </div>
+                
+                <div class="certificate-image">
+                    <img src="image/WhatsApp Image 2025-05-11 at 14.28.55.jpeg" 
+                         alt="BTS Certificate" 
+                         class="cert-img">
+                    <div class="cert-overlay">
+                        <button class="view-cert-btn"
+                                data-title="Brevet de Technicien Supérieur"
+                                data-issuer="BTS Morocco"
+                                data-year="2025"
+                                data-image="image/WhatsApp Image 2025-05-11 at 14.28.55.jpeg">
+                            <i class="fas fa-expand"></i>
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="certificate-content">
+                    <h3 class="cert-title">Brevet de Technicien Supérieur</h3>
+                    <p class="cert-issuer">
+                        <i class="fas fa-university"></i> BTS Morocco
+                    </p>
+                    <div class="cert-tags">
+                        <span class="cert-tag">Higher Education</span>
+                        <span class="cert-tag">Technical Diploma</span>
+                    </div>
+                    <div class="cert-actions">
+                        <button class="verify-btn disabled">
+                            <i class="fas fa-diploma"></i> Official Diploma
+                        </button>
+                        <button class="quick-view-btn">
+                            <i class="fas fa-eye"></i> Quick View
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Front-End Web Development -->
+            <div class="certificate-item glass-card" data-category="tech" data-year="2025">
+                <div class="certificate-header">
+                    <div class="cert-badge">
+                        <i class="fas fa-code"></i>
+                        <span class="badge-text">Web Dev</span>
+                    </div>
+                    <div class="cert-date">2025</div>
+                </div>
+                
+                <div class="certificate-image">
+                    <img src="image/WhatsApp Image 2025-05-11 at 14.28.55.jpeg" 
+                         alt="Front-End Development Certificate" 
+                         class="cert-img">
+                    <div class="cert-overlay">
+                        <button class="view-cert-btn"
+                                data-title="Front-End Web Development"
+                                data-issuer="Self Learning"
+                                data-year="2025"
+                                data-image="image/WhatsApp Image 2025-05-11 at 14.28.55.jpeg">
+                            <i class="fas fa-expand"></i>
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="certificate-content">
+                    <h3 class="cert-title">Front-End Web Development</h3>
+                    <p class="cert-issuer">
+                        <i class="fas fa-user-graduate"></i> Self Learning
+                    </p>
+                    <div class="cert-tags">
+                        <span class="cert-tag">HTML/CSS</span>
+                        <span class="cert-tag">JavaScript</span>
+                        <span class="cert-tag">Responsive Design</span>
+                    </div>
+                    <div class="cert-actions">
+                        <button class="verify-btn portfolio-verify">
+                            <i class="fas fa-laptop-code"></i> View Projects
+                        </button>
+                        <button class="quick-view-btn">
+                            <i class="fas fa-eye"></i> Quick View
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Back-End Web Development -->
+            <div class="certificate-item glass-card" data-category="tech" data-year="2025">
+                <div class="certificate-header">
+                    <div class="cert-badge">
+                        <i class="fas fa-server"></i>
+                        <span class="badge-text">Backend</span>
+                    </div>
+                    <div class="cert-date">2025</div>
+                </div>
+                
+                <div class="certificate-image">
+                    <img src="image/WhatsApp Image 2025-05-11 at 14.28.55.jpeg" 
+                         alt="Back-End Development Certificate" 
+                         class="cert-img">
+                    <div class="cert-overlay">
+                        <button class="view-cert-btn"
+                                data-title="Back-End Web Development"
+                                data-issuer="Self Learning"
+                                data-year="2025"
+                                data-image="image/WhatsApp Image 2025-05-11 at 14.28.55.jpeg">
+                            <i class="fas fa-expand"></i>
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="certificate-content">
+                    <h3 class="cert-title">Back-End Web Development</h3>
+                    <p class="cert-issuer">
+                        <i class="fas fa-user-graduate"></i> Self Learning
+                    </p>
+                    <div class="cert-tags">
+                        <span class="cert-tag">Python</span>
+                        <span class="cert-tag">Databases</span>
+                        <span class="cert-tag">APIs</span>
+                    </div>
+                    <div class="cert-actions">
+                        <button class="verify-btn portfolio-verify">
+                            <i class="fas fa-laptop-code"></i> View Projects
+                        </button>
+                        <button class="quick-view-btn">
+                            <i class="fas fa-eye"></i> Quick View
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Data Science -->
+            <div class="certificate-item glass-card" data-category="ai" data-year="2025">
+                <div class="certificate-header">
+                    <div class="cert-badge ai-badge">
+                        <i class="fas fa-chart-line"></i>
+                        <span class="badge-text">Data Science</span>
+                    </div>
+                    <div class="cert-date">2025</div>
+                </div>
+                
+                <div class="certificate-image">
+                    <img src="image/WhatsApp Image 2025-05-11 at 14.28.55.jpeg" 
+                         alt="Data Science Certificate" 
+                         class="cert-img">
+                    <div class="cert-overlay">
+                        <button class="view-cert-btn"
+                                data-title="Data Science"
+                                data-issuer="Self Learning"
+                                data-year="2025"
+                                data-image="image/WhatsApp Image 2025-05-11 at 14.28.55.jpeg">
+                            <i class="fas fa-expand"></i>
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="certificate-content">
+                    <h3 class="cert-title">Data Science</h3>
+                    <p class="cert-issuer">
+                        <i class="fas fa-user-graduate"></i> Self Learning
+                    </p>
+                    <div class="cert-tags">
+                        <span class="cert-tag">Statistics</span>
+                        <span class="cert-tag">Machine Learning</span>
+                        <span class="cert-tag">Data Analysis</span>
+                    </div>
+                    <div class="cert-actions">
+                        <button class="verify-btn portfolio-verify">
+                            <i class="fas fa-project-diagram"></i> View Analysis
+                        </button>
+                        <button class="quick-view-btn">
+                            <i class="fas fa-eye"></i> Quick View
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Stats Counter -->
+        <div class="cert-stats glass-card">
+            <div class="stat-item">
+                <div class="stat-number" data-count="11">0</div>
+                <div class="stat-label">Total Certificates</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number" data-count="5">0</div>
+                <div class="stat-label">Technical Skills</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number" data-count="3">0</div>
+                <div class="stat-label">AI & Data</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number" data-count="3">0</div>
+                <div class="stat-label">Office Suite</div>
+            </div>
+        </div>
     </div>
 
-    <div class="project-item fade-in-up-item" onclick="openModal('ALX AI Starter Kit', 'ALX Africa', '2025')">
-      <img class="project-img" src="image/113-alx-ai-starter-kit-certificate-abdelmounaim-elharba.png" alt="">
-      <div class="project-info">
-        <p>ALX AI Starter Kit</p>
-        <p><a href="#">View</a></p>
-      </div>
+    <!-- Certificate Modal -->
+    <div id="certificateModal" class="cert-modal glass-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="modalTitle">Certificate Details</h3>
+                <button class="modal-close">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            
+            <div class="modal-body">
+                <div class="modal-image">
+                    <img id="modalImage" src="" alt="Certificate Preview">
+                    <div class="image-actions">
+                        <button class="zoom-btn" id="zoomIn">
+                            <i class="fas fa-search-plus"></i>
+                        </button>
+                        <button class="zoom-btn" id="zoomOut">
+                            <i class="fas fa-search-minus"></i>
+                        </button>
+                        <button class="download-btn" id="downloadCert">
+                            <i class="fas fa-download"></i>
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="modal-info">
+                    <div class="info-item">
+                        <i class="fas fa-certificate"></i>
+                        <div>
+                            <h4>Certificate Title</h4>
+                            <p id="infoTitle">-</p>
+                        </div>
+                    </div>
+                    <div class="info-item">
+                        <i class="fas fa-building"></i>
+                        <div>
+                            <h4>Issuing Organization</h4>
+                            <p id="infoIssuer">-</p>
+                        </div>
+                    </div>
+                    <div class="info-item">
+                        <i class="fas fa-calendar-alt"></i>
+                        <div>
+                            <h4>Issue Year</h4>
+                            <p id="infoYear">-</p>
+                        </div>
+                    </div>
+                    <div class="info-item">
+                        <i class="fas fa-id-badge"></i>
+                        <div>
+                            <h4>Credential ID</h4>
+                            <p id="infoId">-</p>
+                        </div>
+                    </div>
+                    <div class="info-item">
+                        <i class="fas fa-shield-alt"></i>
+                        <div>
+                            <h4>Verification</h4>
+                            <a id="verifyLink" href="#" target="_blank" class="verify-link">
+                                <i class="fas fa-external-link-alt"></i> Verify Online
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="modal-footer">
+                <button class="btn-primary share-cert">
+                    <i class="fas fa-share-alt"></i> Share Certificate
+                </button>
+                <button class="btn-secondary close-modal">Close</button>
+            </div>
+        </div>
     </div>
-
-    <div class="project-item fade-in-up-item" onclick="openModal('ALX AI Career Essentials', 'ALX Africa', '2025')">
-      <img class="project-img" src="image/73-alx-aice-ai-career-essentials-certificate-abdelmounaim-elharba.png" alt="">
-      <div class="project-info">
-        <p>ALX AI Career Essentials</p>
-        <p><a href="#">View</a></p>
-      </div>
-    </div>
-
-    <div class="project-item fade-in-up-item" onclick="openModal('Algorithm Certificate', 'Local Institute', '2024')">
-      <img class="project-img" src="image/ALGORITM.jpg" alt="">
-      <div class="project-info">
-        <p>ALGORITM</p>
-        <p><a href="#">View</a></p>
-      </div>
-    </div>
-
-    <div class="project-item fade-in-up-item" onclick="openModal('Microsoft Excel 2016', 'Microsoft', '2024')">
-      <img class="project-img" src="image/Office Excel 2016_page-0001.jpg" alt="">
-      <div class="project-info">
-        <p>Office Excel</p>
-        <p><a href="#">View</a></p>
-      </div>
-    </div>
-
-    <div class="project-item fade-in-up-item" onclick="openModal('Microsoft PowerPoint 2016', 'Microsoft', '2024')">
-      <img class="project-img" src="image/Office PowerPoint 2016_page-0001.jpg" alt="">
-      <div class="project-info">
-        <p>Office PowerPoint</p>
-        <p><a href="#">View</a></p>
-      </div>
-    </div>
-
-    <div class="project-item fade-in-up-item" onclick="openModal('Microsoft Word 2016', 'Microsoft', '2024')">
-      <img class="project-img" src="image/Office Word 2016_page-0001.jpg" alt="">
-      <div class="project-info">
-        <p>Office Word</p>
-        <p><a href="#">View</a></p>
-      </div>
-    </div>
-
-    <div class="project-item fade-in-up-item" onclick="openModal('Brevet de Technicien Supérieur', 'BTS Morocco', '2025')">
-      <img class="project-img" src="image/WhatsApp Image 2025-05-11 at 14.28.55.jpeg" alt="">
-      <div class="project-info">
-        <p>Brevet de Technicien Supérieur</p>
-        <p><a href="#">View</a></p>
-      </div>
-    </div>
-
-    <div class="project-item fade-in-up-item" onclick="openModal('Front-End Web Development', 'Self Learning', '2025')">
-      <img class="project-img" src="image/WhatsApp Image 2025-05-11 at 14.28.55.jpeg" alt="">
-      <div class="project-info">
-        <p>Front-End Web Development</p>
-        <p><a href="#">View</a></p>
-      </div>
-    </div>
-
-    <div class="project-item fade-in-up-item" onclick="openModal('Back-End Web Development', 'Self Learning', '2025')">
-      <img class="project-img" src="image/WhatsApp Image 2025-05-11 at 14.28.55.jpeg" alt="">
-      <div class="project-info">
-        <p>Back-End Web Development</p>
-        <p><a href="#">View</a></p>
-      </div>
-    </div>
-
-    <div class="project-item fade-in-up-item" onclick="openModal('Data Science', 'Self Learning', '2025')">
-      <img class="project-img" src="image/WhatsApp Image 2025-05-11 at 14.28.55.jpeg" alt="">
-      <div class="project-info">
-        <p>Data Science</p>
-        <p><a href="#">View</a></p>
-      </div>
-    </div>
-
-  </div>
 </section>
 
 
   </section>
 
-  <!-- Contact -->
-<section id="contact" class="section">
-  <h2 class="section-title">Get In Touch</h2>
-  <div class="contact-grid">
-    <!-- FORM -->
-    <form class="contact-form" action="https://formspree.io/f/myzwdpdv" method="POST">
-      <input type="text" name="name" placeholder="Your Name" required/>
-      <input type="email" name="email" placeholder="Your Email" required/>
-      <input type="text" name="subject" placeholder="Subject" required/>
-      <textarea name="message" placeholder="Your Message" rows="6" required></textarea>
-      <button type="submit" class="btn-primary">Send Message</button>
-    </form>
-
-    <!-- CONTACT INFO + DOWNLOAD CV -->
-    <div class="contact-info">
-      <div class="contact-details">
-        <div><i class="fas fa-envelope"></i> elharba.abdelmounaim@gmail.com</div>
-        <div><i class="fas fa-phone"></i> +212 701684564</div>
-        <div><i class="fas fa-map-marker-alt"></i> Dakhla, Morocco</div>
-      </div>
-
-      <div class="download-cv">
-        <h2>Download CV</h2>
-        <p>Get a copy of my resume for more details about my experience</p>
-        <a href="image/abdelmounaim-elharba CV .pdf" download class="btn-primary mt-10">
-          <i class="fas fa-download"></i> Download CV
-        </a>
-      </div>
+<!-- Contact Section -->
+<section id="contact" class="section contact-section">
+    <!-- Background Elements -->
+    <div class="contact-bg-shapes">
+        <div class="shape shape-1"></div>
+        <div class="shape shape-2"></div>
+        <div class="shape shape-3"></div>
+        <div class="contact-grid-overlay"></div>
     </div>
-  </div>
-</section>
+    
+    <div class="container">
+        <h2 class="section-title glass-title">
+            <span class="title-text">Get In Touch</span>
+            <span class="title-line"></span>
+        </h2>
+        
+        <div class="contact-grid">
+            <!-- FORM -->
+            <div class="form-container glass-card">
+                <div class="form-header">
+                    <h3><i class="fas fa-paper-plane"></i> Send Message</h3>
+                    <p>Let's discuss your next project</p>
+                </div>
+                
+                <form class="contact-form" action="https://formspree.io/f/myzwdpdv" method="POST">
+                    <div class="form-group">
+                        <input type="text" name="name" placeholder="Your Full Name" required/>
+                        <div class="input-icon">
+                            <i class="fas fa-user"></i>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <input type="email" name="email" placeholder="Email Address" required/>
+                        <div class="input-icon">
+                            <i class="fas fa-envelope"></i>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <input type="text" name="subject" placeholder="Project Subject" required/>
+                        <div class="input-icon">
+                            <i class="fas fa-tag"></i>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <textarea name="message" placeholder="Tell me about your project..." rows="5" required></textarea>
+                        <div class="input-icon">
+                            <i class="fas fa-comment-alt"></i>
+                        </div>
+                    </div>
+                    
+                    <div class="form-actions">
+                        <button type="submit" class="btn-primary glass-btn">
+                            <span class="btn-text">Send Message</span>
+                            <i class="fas fa-paper-plane"></i>
+                            <div class="btn-glow"></div>
+                        </button>
+                        <div class="form-note">
+                            <i class="fas fa-shield-alt"></i> Your data is safe with us
+                        </div>
+                    </div>
+                </form>
+            </div>
 
+            <!-- CONTACT INFO + DOWNLOAD CV -->
+            <div class="contact-sidebar">
+                <!-- Contact Info Card -->
+                <div class="contact-info glass-card">
+                    <div class="info-header">
+                        <h3><i class="fas fa-address-card"></i> Contact Info</h3>
+                        <p>Always available for opportunities</p>
+                    </div>
+                    
+                    <div class="contact-items">
+                        <div class="contact-item">
+                            <div class="item-icon email-icon">
+                                <i class="fas fa-envelope"></i>
+                                <div class="icon-glow"></div>
+                            </div>
+                            <div class="item-content">
+                                <h4>Email</h4>
+                                <a href="mailto:elharba.abdelmounaim@gmail.com" class="contact-link">
+                                    elharba.abdelmounaim@gmail.com
+                                </a>
+                            </div>
+                        </div>
+                        
+                        <div class="contact-item">
+                            <div class="item-icon phone-icon">
+                                <i class="fas fa-phone"></i>
+                                <div class="icon-glow"></div>
+                            </div>
+                            <div class="item-content">
+                                <h4>Phone</h4>
+                                <a href="tel:+212701684564" class="contact-link">
+                                    +212 701 684 564
+                                </a>
+                            </div>
+                        </div>
+                        
+                        <div class="contact-item">
+                            <div class="item-icon location-icon">
+                                <i class="fas fa-map-marker-alt"></i>
+                                <div class="icon-glow"></div>
+                            </div>
+                            <div class="item-content">
+                                <h4>Location</h4>
+                                <span class="contact-text">Dakhla, Morocco</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="social-contact">
+                        <h4>Connect with me</h4>
+                        <div class="social-icons">
+                            <a href="https://github.com/Elharba-Abdelmounaim" class="social-icon" target="_blank">
+                                <i class="fab fa-github"></i>
+                            </a>
+                            <a href="https://linkedin.com/in/yourprofile" class="social-icon" target="_blank">
+                                <i class="fab fa-linkedin"></i>
+                            </a>
+                            <a href="https://twitter.com/yourprofile" class="social-icon" target="_blank">
+                                <i class="fab fa-twitter"></i>
+                            </a>
+                            <a href="https://instagram.com/yourprofile" class="social-icon" target="_blank">
+                                <i class="fab fa-instagram"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Download CV Card -->
+                <div class="download-card glass-card">
+                    <div class="download-header">
+                        <div class="cv-icon">
+                            <i class="fas fa-file-download"></i>
+                            <div class="cv-glow"></div>
+                        </div>
+                        <h3>Download CV</h3>
+                        <p>Get detailed information about my experience</p>
+                    </div>
+                    
+                    <div class="cv-info">
+                        <div class="cv-detail">
+                            <i class="fas fa-file-pdf"></i>
+                            <span>PDF Format</span>
+                        </div>
+                        <div class="cv-detail">
+                            <i class="fas fa-clock"></i>
+                            <span>Updated Recently</span>
+                        </div>
+                        <div class="cv-detail">
+                            <i class="fas fa-language"></i>
+                            <span>English Version</span>
+                        </div>
+                    </div>
+                    
+                    <a href="image/abdelmounaim-elharba CV .pdf" download class="btn-primary glass-btn download-btn">
+                        <span class="btn-text">Download CV</span>
+                        <i class="fas fa-download"></i>
+                        <div class="btn-glow"></div>
+                        <div class="download-progress"></div>
+                    </a>
+                    
+                    <div class="download-note">
+                        <i class="fas fa-info-circle"></i>
+                        File size: 2.1 MB • Last update: March 2025
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Success Modal -->
+    <div id="successModal" class="modal glass-modal">
+        <div class="modal-content">
+            <div class="modal-icon">
+                <i class="fas fa-check-circle"></i>
+            </div>
+            <h3>Message Sent Successfully!</h3>
+            <p>Thank you for reaching out. I'll get back to you within 24 hours.</p>
+            <button class="btn-primary modal-close">Close</button>
+        </div>
+    </div>
+</section>
 
 
   <script src="script.js"></script>

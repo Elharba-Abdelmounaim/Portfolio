@@ -1,28 +1,120 @@
 // ===== script.js =====
-document.addEventListener("DOMContentLoaded", () => {
-  // Navbar scroll effect + active link
-  const nav = document.getElementById("navbar");
-  const links = document.querySelectorAll(".nav-links a");
-  const hamburger = document.querySelector(".hamburger");
-  const navLinks = document.querySelector(".nav-links");
+// ============================================
+// GLASS NAVBAR INTERACTIVE FUNCTIONS
+// ============================================
 
-  hamburger.addEventListener("click", () => {
-    navLinks.classList.toggle("active");
-  });
-
-  window.addEventListener("scroll", () => {
-    nav.classList.toggle("scrolled", window.scrollY > 100);
-
-    let current = "";
-    document.querySelectorAll("section").forEach(sec => {
-      const rect = sec.getBoundingClientRect();
-      if (rect.top <= 150) current = sec.getAttribute("id");
+document.addEventListener('DOMContentLoaded', function() {
+    const navbar = document.getElementById('navbar');
+    const hamburger = document.getElementById('hamburger');
+    const navLinks = document.querySelector('.nav-links');
+    const navItems = document.querySelectorAll('.nav-link');
+    const themeToggle = document.getElementById('themeToggle');
+    
+    // إضافة تأخيرات للروابط
+    navItems.forEach((link, index) => {
+        link.style.setProperty('--i', index);
     });
-
-    links.forEach(a => {
-      a.classList.toggle("active", a.getAttribute("href").slice(1) === current);
+    
+    // تأثير التمرير
+    window.addEventListener('scroll', function() {
+        if (window.scrollY > 100) {
+            navbar.classList.add('scrolled');
+        } else {
+            navbar.classList.remove('scrolled');
+        }
+        
+        // تأثير بارالاكس خفيف
+        navbar.style.transform = `translateY(${window.scrollY * 0.1}px)`;
     });
-  });
+    
+    // زر القائمة المنسدلة
+    hamburger.addEventListener('click', function() {
+        this.classList.toggle('active');
+        navLinks.classList.toggle('active');
+        
+        // إنشاء overlay عند فتح القائمة
+        if (!document.querySelector('.menu-overlay')) {
+            const overlay = document.createElement('div');
+            overlay.className = 'menu-overlay';
+            document.body.appendChild(overlay);
+            
+            overlay.addEventListener('click', function() {
+                hamburger.classList.remove('active');
+                navLinks.classList.remove('active');
+                this.remove();
+            });
+            
+            setTimeout(() => overlay.classList.add('active'), 10);
+        } else {
+            const overlay = document.querySelector('.menu-overlay');
+            overlay.classList.remove('active');
+            setTimeout(() => overlay.remove(), 400);
+        }
+    });
+    
+    // تغيير النمط (داك/لايت)
+    themeToggle.addEventListener('click', function() {
+        const icon = this.querySelector('i');
+        const isDark = document.body.classList.toggle('light-mode');
+        
+        icon.classList.toggle('fa-moon', !isDark);
+        icon.classList.toggle('fa-sun', isDark);
+        
+      
+    });
+    
+    // تفعيل الرابط النشط بناءً على التمرير
+    const sections = document.querySelectorAll('section[id]');
+    
+    function activateNavLink() {
+        const scrollY = window.pageYOffset;
+        
+        sections.forEach(section => {
+            const sectionHeight = section.offsetHeight;
+            const sectionTop = section.offsetTop - 100;
+            const sectionId = section.getAttribute('id');
+            
+            if (scrollY > sectionTop && scrollY <= sectionTop + sectionHeight) {
+                navItems.forEach(link => {
+                    link.classList.remove('active');
+                    if (link.getAttribute('href') === `#${sectionId}`) {
+                        link.classList.add('active');
+                    }
+                });
+            }
+        });
+    }
+    
+    window.addEventListener('scroll', activateNavLink);
+    
+    // تأثيرات Hover للروابط
+    navItems.forEach(link => {
+        link.addEventListener('mouseenter', function(e) {
+            const rect = this.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+            
+            this.style.setProperty('--mouse-x', `${x}px`);
+            this.style.setProperty('--mouse-y', `${y}px`);
+        });
+    });
+    
+    // إغلاق القائمة عند النقر على رابط
+    navItems.forEach(link => {
+        link.addEventListener('click', function() {
+            hamburger.classList.remove('active');
+            navLinks.classList.remove('active');
+            const overlay = document.querySelector('.menu-overlay');
+            if (overlay) overlay.remove();
+        });
+    });
+    
+    // تحميل أولي
+    setTimeout(() => {
+        navbar.style.opacity = '1';
+        navbar.style.transform = 'translateY(0)';
+    }, 100);
+});
 
   // Smooth scroll
   document.querySelectorAll('a[href^="#"]').forEach(a => {
@@ -69,4 +161,5 @@ document.addEventListener("DOMContentLoaded", () => {
   window.closeModal = () => {
     document.getElementById("certModal").style.display = "none";
   };
-});
+;
+
