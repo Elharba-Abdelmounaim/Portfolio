@@ -713,37 +713,24 @@ body {
     }
 }
 
-/* Hero Title */
+
+
+
+
 /* Hero Title */
 .hero-title {
     margin-bottom: 40px;
-    
     padding: 20px;
-     display: flex;
-    justify-content: flex-end /* تبدأ من اليمين */
+    text-align: right; /* أبسط طريقة للمحاذاة اليمنى */
+    width: 100%;
 }
 
 .title-line {
-    display: flex;
-    align-items: center;
-    flex-wrap: wrap; 
-    gap: 15px; 
-    font-weight: 700;
-    line-height: 1;
-    margin-left: auto; /* يدفع العنصر لليمين */
+    display: inline-block; /* أو inline-flex */
 }
 
 .line-2 {
     white-space: nowrap;
-}
-
-.line-1 {
-    font-size: 2.5rem;
-    color: rgba(255, 255, 255, 0.8);
-}
-
-.line-2 {
-    font-size: 4rem;
     position: relative;
     display: inline-flex;
 }
@@ -753,9 +740,10 @@ body {
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
-    position: relative; /* غيرت من fixed إلى relative */
+    position: relative;
     z-index: 1;
     white-space: nowrap;
+    font-size: 4rem;
 }
 
 .name-glow {
@@ -765,11 +753,19 @@ body {
     transform: translate(-50%, -50%);
     width: 105%;
     height: 105%;
-    background: inherit;
+    background: linear-gradient(135deg, #8a2be2, #00bfff, #9400d3);
     filter: blur(20px);
     opacity: 0.4;
     z-index: 0;
 }
+
+
+
+
+
+
+
+
 
 
 
