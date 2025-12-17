@@ -1377,3 +1377,397 @@ document.addEventListener('DOMContentLoaded', function() {
     // Add level indicators
     addSkillLevelIndicators();
 });
+
+
+// ============================================
+// PROJECTS SECTION - INTERACTIVE FUNCTIONS
+// ============================================
+
+document.addEventListener('DOMContentLoaded', function() {
+    const projectCards = document.querySelectorAll('.project-card');
+    const filterButtons = document.querySelectorAll('.projects-filter .filter-btn');
+    const loadMoreBtn = document.querySelector('.load-more-btn');
+    const projectModal = document.getElementById('projectModal');
+    const detailsButtons = document.querySelectorAll('.details-btn');
+    const closeModalButtons = document.querySelectorAll('.modal-close, .close-modal');
+    const statNumbers = document.querySelectorAll('.projects-stats .stat-number');
+    
+    let currentFilter = 'all';
+    let visibleCount = 6; // عدد المشاريع المعروضة بداية
+    const totalProjects = projectCards.length;
+    
+    // Initialize projects section
+    function initProjectsSection() {
+        // Initialize stats counter
+        initStatsCounter();
+        
+        // Initialize filter system
+        initFilterSystem();
+        
+        // Initialize modal system
+        initModalSystem();
+        
+        // Initialize load more functionality
+        initLoadMore();
+        
+        // Initialize hover effects
+        initHoverEffects();
+        
+        // Initialize click animations
+        initClickAnimations();
+        
+        // Initialize project cards
+        updateVisibleProjects();
+    }
+    
+    // Initialize stats counter
+    function initStatsCounter() {
+        statNumbers.forEach(stat => {
+            const target = parseInt(stat.getAttribute('data-count'));
+            const duration = 2000;
+            const step = target / (duration / 16);
+            
+            let current = 0;
+            const timer = setInterval(() => {
+                current += step;
+                if (current >= target) {
+                    current = target;
+                    clearInterval(timer);
+                }
+                stat.textContent = Math.floor(current);
+            }, 16);
+        });
+    }
+    
+    // Initialize filter system
+    function initFilterSystem() {
+        filterButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                // Remove active class from all buttons
+                filterButtons.forEach(btn => btn.classList.remove('active'));
+                
+                // Add active class to clicked button
+                this.classList.add('active');
+                
+                // Get filter value
+                currentFilter = this.getAttribute('data-filter');
+                
+                // Reset visible count
+                visibleCount = 6;
+                
+                // Filter and show projects
+                updateVisibleProjects();
+                
+                // Update load more button text
+                updateLoadMoreButton();
+            });
+        });
+    }
+    
+    // Initialize modal system
+    function initModalSystem() {
+        detailsButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                const projectCard = this.closest('.project-card');
+                openProjectModal(projectCard);
+            });
+        });
+        
+        // Project preview buttons
+        const previewButtons = document.querySelectorAll('.project-preview-btn');
+        previewButtons.forEach(button => {
+            button.addEventListener('click', function(e) {
+                e.stopPropagation();
+                const projectCard = this.closest('.project-card');
+                openProjectModal(projectCard);
+            });
+        });
+        
+        // Demo buttons
+        const demoButtons = document.querySelectorAll('.project-demo-btn');
+        demoButtons.forEach(button => {
+            button.addEventListener('click', function(e) {
+                e.stopPropagation();
+                const projectCard = this.closest('.project-card');
+                const title = projectCard.querySelector('.project-title').textContent;
+                alert(`Launching demo for: ${title}\n\nDemo would open in a new window.`);
+            });
+        });
+        
+        // Share buttons
+        const shareButtons = document.querySelectorAll('.share-btn');
+        shareButtons.forEach(button => {
+            button.addEventListener('click', function(e) {
+                e.stopPropagation();
+                const projectCard = this.closest('.project-card');
+                shareProject(projectCard);
+            });
+        });
+        
+        // Close modal handlers
+        closeModalButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                projectModal.classList.remove('active');
+                document.body.style.overflow = 'auto';
+            });
+        });
+        
+        // Close modal on outside click
+        projectModal.addEventListener('click', function(e) {
+            if (e.target === this) {
+                this.classList.remove('active');
+                document.body.style.overflow = 'auto';
+            }
+        });
+        
+        // Close modal on Escape key
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape' && projectModal.classList.contains('active')) {
+                projectModal.classList.remove('active');
+                document.body.style.overflow = 'auto';
+            }
+        });
+    }
+    
+    // Initialize load more functionality
+    function initLoadMore() {
+        if (loadMoreBtn) {
+            loadMoreBtn.addEventListener('click', function() {
+                visibleCount += 3;
+                updateVisibleProjects();
+                updateLoadMoreButton();
+                
+                // Add loading animation
+                const originalText = this.innerHTML;
+                this.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Loading...';
+                this.disabled = true;
+                
+                setTimeout(() => {
+                    this.innerHTML = originalText;
+                    this.disabled = false;
+                    
+                    // Scroll to newly loaded projects
+                    const newProjects = document.querySelectorAll('.project-card:not(.hidden)');
+                    if (newProjects.length > 0) {
+                        const lastProject = newProjects[newProjects.length - 1];
+                        lastProject.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+                    }
+                }, 500);
+            });
+        }
+    }
+    
+    // Initialize hover effects
+    function initHoverEffects() {
+        projectCards.forEach(card => {
+            card.addEventListener('mouseenter', function() {
+                const badges = this.querySelectorAll('.badge');
+                badges.forEach(badge => {
+                    badge.style.transform = 'translateY(-3px)';
+                });
+                
+                const techTags = this.querySelectorAll('.tech-tag');
+                techTags.forEach((tag, index) => {
+                    setTimeout(() => {
+                        tag.style.transform = 'translateY(-2px)';
+                    }, index * 50);
+                });
+            });
+            
+            card.addEventListener('mouseleave', function() {
+                const badges = this.querySelectorAll('.badge');
+                badges.forEach(badge => {
+                    badge.style.transform = 'translateY(0)';
+                });
+                
+                const techTags = this.querySelectorAll('.tech-tag');
+                techTags.forEach(tag => {
+                    tag.style.transform = 'translateY(0)';
+                });
+            });
+        });
+    }
+    
+    // Initialize click animations
+    function initClickAnimations() {
+        projectCards.forEach(card => {
+            card.addEventListener('click', function(e) {
+                // Only trigger if not clicking on interactive elements
+                if (!e.target.closest('a') && !e.target.closest('button')) {
+                    openProjectModal(this);
+                }
+            });
+        });
+    }
+    
+    // Update visible projects based on filter and count
+    function updateVisibleProjects() {
+        let visibleIndex = 0;
+        
+        projectCards.forEach((card, index) => {
+            const category = card.getAttribute('data-category');
+            const shouldShow = (currentFilter === 'all' || currentFilter === category) && 
+                              visibleIndex < visibleCount;
+            
+            if (shouldShow) {
+                card.classList.remove('hidden');
+                card.style.display = 'flex';
+                card.style.animationDelay = `${visibleIndex * 0.1}s`;
+                card.classList.add('animate-in');
+                visibleIndex++;
+            } else {
+                card.classList.add('hidden');
+                card.style.display = 'none';
+                card.classList.remove('animate-in');
+            }
+        });
+    }
+    
+    // Update load more button text and visibility
+    function updateLoadMoreButton() {
+        if (!loadMoreBtn) return;
+        
+        const filteredProjects = Array.from(projectCards).filter(card => {
+            const category = card.getAttribute('data-category');
+            return currentFilter === 'all' || currentFilter === category;
+        }).length;
+        
+        if (visibleCount >= filteredProjects) {
+            loadMoreBtn.style.display = 'none';
+        } else {
+            loadMoreBtn.style.display = 'inline-flex';
+            const remaining = filteredProjects - visibleCount;
+            loadMoreBtn.innerHTML = `<i class="fas fa-plus"></i> Load More (${remaining} remaining)`;
+        }
+    }
+    
+    // Open project modal with details
+    function openProjectModal(projectCard) {
+        // Get project details
+        const title = projectCard.querySelector('.project-title').textContent;
+        const description = projectCard.querySelector('.project-description').textContent;
+        const imageSrc = projectCard.querySelector('.project-img').src;
+        const date = projectCard.querySelector('.project-date').textContent;
+        const category = projectCard.getAttribute('data-category');
+        const githubLink = projectCard.querySelector('a[href*="github"]')?.href || '#';
+        
+        // Get technologies
+        const techTags = Array.from(projectCard.querySelectorAll('.tech-tag'))
+            .map(tag => tag.textContent);
+        
+        // Get features
+        const features = Array.from(projectCard.querySelectorAll('.feature span'))
+            .map(feature => feature.textContent);
+        
+        // Set modal content
+        document.getElementById('modalProjectTitle').textContent = title;
+        document.getElementById('modalProjectDescription').textContent = description;
+        document.getElementById('modalProjectImage').src = imageSrc;
+        document.getElementById('modalProjectYear').textContent = date.replace('Year: ', '');
+        document.getElementById('modalProjectCategory').textContent = getCategoryName(category);
+        document.getElementById('modalProjectGithub').href = githubLink;
+        
+        // Set technologies
+        const techContainer = document.getElementById('modalProjectTech');
+        techContainer.innerHTML = techTags.map(tech => 
+            `<span class="tech-tag">${tech}</span>`
+        ).join('');
+        
+        // Set features
+        const featuresContainer = document.getElementById('modalProjectFeatures');
+        featuresContainer.innerHTML = features.map(feature => 
+            `<li>${feature}</li>`
+        ).join('');
+        
+        // Set team info (simulated)
+        const teamSize = Math.random() > 0.7 ? 'Team of 3' : 'Solo Project';
+        document.getElementById('modalProjectTeam').textContent = teamSize;
+        
+        // Show modal
+        projectModal.classList.add('active');
+        document.body.style.overflow = 'hidden';
+    }
+    
+    // Share project function
+    function shareProject(projectCard) {
+        const title = projectCard.querySelector('.project-title').textContent;
+        const description = projectCard.querySelector('.project-description').textContent;
+        const githubLink = projectCard.querySelector('a[href*="github"]')?.href || window.location.href;
+        
+        const shareText = `Check out my project "${title}": ${description}\n\nView on GitHub: ${githubLink}`;
+        
+        if (navigator.share) {
+            navigator.share({
+                title: `${title} - My Project`,
+                text: shareText,
+                url: githubLink
+            });
+        } else {
+            // Fallback: Copy to clipboard
+            navigator.clipboard.writeText(shareText)
+                .then(() => {
+                    const shareBtn = projectCard.querySelector('.share-btn');
+                    const originalHTML = shareBtn.innerHTML;
+                    shareBtn.innerHTML = '<i class="fas fa-check"></i>';
+                    shareBtn.style.background = 'linear-gradient(135deg, #00d4aa, #00b894)';
+                    
+                    setTimeout(() => {
+                        shareBtn.innerHTML = originalHTML;
+                        shareBtn.style.background = '';
+                    }, 2000);
+                });
+        }
+    }
+    
+    // Helper function to get category name
+    function getCategoryName(category) {
+        const categories = {
+            'web': 'Web Development',
+            'mobile': 'Mobile App',
+            'devops': 'DevOps',
+            'ai': 'AI & Machine Learning',
+            'design': 'Design & 3D',
+            'programming': 'Programming'
+        };
+        return categories[category] || category;
+    }
+    
+    // Add animation for project cards
+    const animationStyle = document.createElement('style');
+    animationStyle.textContent = `
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .project-card.animate-in {
+            animation: fadeInUp 0.6s ease forwards;
+        }
+        
+        .project-card.hidden {
+            display: none;
+        }
+    `;
+    document.head.appendChild(animationStyle);
+    
+    // Run initialization
+    initProjectsSection();
+    
+    // Add parallax effect for background shapes
+    window.addEventListener('scroll', function() {
+        const scrolled = window.pageYOffset;
+        const shapes = document.querySelectorAll('.project-shape');
+        
+        shapes.forEach((shape, index) => {
+            const speed = 0.2 + (index * 0.1);
+            const yPos = -(scrolled * speed);
+            shape.style.transform = `translateY(${yPos}px)`;
+        });
+    });
+});
