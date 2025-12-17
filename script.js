@@ -1771,3 +1771,551 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 });
+
+
+
+// ============================================
+// HERO SECTION - INTERACTIVE FUNCTIONS
+// ============================================
+
+document.addEventListener('DOMContentLoaded', function() {
+    const heroSection = document.querySelector('.hero-section');
+    const typedText = document.querySelector('.typed-text');
+    const statNumbers = document.querySelectorAll('.stat-number');
+    const socialIcons = document.querySelectorAll('.social-icon');
+    const profileImage = document.querySelector('.profile-image');
+    const mouseTrail = document.querySelector('.mouse-trail');
+    const scrollIndicator = document.querySelector('.scroll-indicator');
+    
+    // Typing animation text
+    const typingTexts = [
+        "Full Stack Developer",
+        "UI/UX Designer",
+        "DevOps Engineer",
+        "3D Visualizer",
+        "Problem Solver",
+        "Tech Enthusiast"
+    ];
+    
+    let textIndex = 0;
+    let charIndex = 0;
+    let isDeleting = false;
+    let isPaused = false;
+    
+    // Initialize hero section
+    function initHeroSection() {
+        // Start typing animation
+        startTypingAnimation();
+        
+        // Initialize stats counter
+        initStatsCounter();
+        
+        // Initialize mouse trail
+        initMouseTrail();
+        
+        // Initialize scroll indicator
+        initScrollIndicator();
+        
+        // Initialize social icons
+        initSocialIcons();
+        
+        // Initialize image interaction
+        initImageInteraction();
+        
+        // Initialize parallax effect
+        initParallaxEffect();
+        
+        // Initialize tooltips
+        initTooltips();
+    }
+    
+    // Typing animation
+    function startTypingAnimation() {
+        function type() {
+            const currentText = typingTexts[textIndex];
+            
+            if (isDeleting) {
+                // Deleting text
+                typedText.textContent = currentText.substring(0, charIndex - 1);
+                charIndex--;
+            } else {
+                // Typing text
+                typedText.textContent = currentText.substring(0, charIndex + 1);
+                charIndex++;
+            }
+            
+            // Check if text is complete
+            if (!isDeleting && charIndex === currentText.length) {
+                // Pause at the end
+                isPaused = true;
+                setTimeout(() => {
+                    isPaused = false;
+                    isDeleting = true;
+                }, 1500);
+            } else if (isDeleting && charIndex === 0) {
+                // Move to next text
+                isDeleting = false;
+                textIndex = (textIndex + 1) % typingTexts.length;
+            }
+            
+            // Set typing speed
+            let speed = isDeleting ? 50 : 100;
+            if (isPaused) speed = 1000;
+            
+            setTimeout(type, speed);
+        }
+        
+        // Start typing
+        type();
+    }
+    
+    // Initialize stats counter
+    function initStatsCounter() {
+        statNumbers.forEach(stat => {
+            const target = parseInt(stat.getAttribute('data-count'));
+            const duration = 2000;
+            const step = target / (duration / 16);
+            
+            let current = 0;
+            const timer = setInterval(() => {
+                current += step;
+                if (current >= target) {
+                    current = target;
+                    clearInterval(timer);
+                    
+                    // Add celebration effect
+                    if (parseInt(stat.textContent) === target) {
+                        stat.style.transform = 'scale(1.2)';
+                        setTimeout(() => {
+                            stat.style.transform = 'scale(1)';
+                        }, 300);
+                    }
+                }
+                stat.textContent = Math.floor(current);
+            }, 16);
+        });
+    }
+    
+    // Initialize mouse trail
+    function initMouseTrail() {
+        if (!mouseTrail) return;
+        
+        let mouseX = 0;
+        let mouseY = 0;
+        let trailX = 0;
+        let trailY = 0;
+        
+        document.addEventListener('mousemove', (e) => {
+            mouseX = e.clientX;
+            mouseY = e.clientY;
+            mouseTrail.style.opacity = '1';
+        });
+        
+        function animateTrail() {
+            trailX += (mouseX - trailX) * 0.1;
+            trailY += (mouseY - trailY) * 0.1;
+            
+            mouseTrail.style.left = `${trailX}px`;
+            mouseTrail.style.top = `${trailY}px`;
+            
+            // Change color based on position
+            const hue = (trailX / window.innerWidth) * 360;
+            mouseTrail.style.background = 
+                `radial-gradient(circle, hsla(${hue}, 70%, 60%, 0.3), transparent)`;
+            
+            requestAnimationFrame(animateTrail);
+        }
+        
+        animateTrail();
+        
+        // Hide trail when mouse leaves window
+        document.addEventListener('mouseleave', () => {
+            mouseTrail.style.opacity = '0';
+        });
+        
+        document.addEventListener('mouseenter', () => {
+            mouseTrail.style.opacity = '1';
+        });
+    }
+    
+    // Initialize scroll indicator
+    function initScrollIndicator() {
+        if (!scrollIndicator) return;
+        
+        // Hide indicator after first scroll
+        let hasScrolled = false;
+        
+        window.addEventListener('scroll', () => {
+            if (!hasScrolled && window.scrollY > 100) {
+                hasScrolled = true;
+                scrollIndicator.style.opacity = '0';
+                scrollIndicator.style.transform = 'translateY(20px)';
+                
+                setTimeout(() => {
+                    scrollIndicator.style.display = 'none';
+                }, 500);
+            }
+        });
+        
+        // Click to scroll
+        scrollIndicator.addEventListener('click', () => {
+            window.scrollTo({
+                top: window.innerHeight,
+                behavior: 'smooth'
+            });
+        });
+    }
+    
+    // Initialize social icons
+    function initSocialIcons() {
+        socialIcons.forEach(icon => {
+            icon.addEventListener('mouseenter', function() {
+                const iconRect = this.getBoundingClientRect();
+                const iconCenterX = iconRect.left + iconRect.width / 2;
+                const iconCenterY = iconRect.top + iconRect.height / 2;
+                
+                // Create ripple effect
+                const ripple = document.createElement('div');
+                ripple.className = 'icon-ripple';
+                ripple.style.left = `${iconCenterX}px`;
+                ripple.style.top = `${iconCenterY}px`;
+                document.body.appendChild(ripple);
+                
+                setTimeout(() => {
+                    ripple.remove();
+                }, 1000);
+                
+                // Add bounce animation
+                this.style.animation = 'none';
+                setTimeout(() => {
+                    this.style.animation = '';
+                }, 10);
+            });
+            
+            icon.addEventListener('click', function(e) {
+                // Add click animation
+                this.style.transform = 'scale(0.9)';
+                setTimeout(() => {
+                    this.style.transform = '';
+                }, 300);
+                
+                // Track social clicks (analytics placeholder)
+                const platform = this.classList[1];
+                console.log(`Social click: ${platform}`);
+            });
+        });
+    }
+    
+    // Initialize image interaction
+    function initImageInteraction() {
+        if (!profileImage) return;
+        
+        let isRotating = false;
+        
+        profileImage.addEventListener('mouseenter', () => {
+            if (!isRotating) {
+                profileImage.style.transition = 'transform 0.5s ease';
+                profileImage.style.transform = 'rotateY(180deg) scale(1.1)';
+                
+                setTimeout(() => {
+                    profileImage.style.transform = 'rotateY(0deg) scale(1.1)';
+                }, 500);
+                
+                isRotating = true;
+                setTimeout(() => {
+                    isRotating = false;
+                }, 1000);
+            }
+        });
+        
+        profileImage.addEventListener('click', () => {
+            // Create image modal
+            const modal = document.createElement('div');
+            modal.className = 'image-modal';
+            modal.innerHTML = `
+                <div class="modal-content">
+                    <img src="${profileImage.src}" alt="Profile Image">
+                    <button class="close-modal">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+            `;
+            
+            document.body.appendChild(modal);
+            
+            // Add styles
+            const style = document.createElement('style');
+            style.textContent = `
+                .image-modal {
+                    position: fixed;
+                    top: 0;
+                    left: 0;
+                    width: 100%;
+                    height: 100%;
+                    background: rgba(0, 0, 0, 0.9);
+                    backdrop-filter: blur(20px);
+                    z-index: 99999;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    animation: fadeIn 0.3s ease;
+                }
+                
+                .image-modal .modal-content {
+                    position: relative;
+                    max-width: 80%;
+                    max-height: 80%;
+                }
+                
+                .image-modal img {
+                    width: 100%;
+                    height: auto;
+                    border-radius: 20px;
+                    box-shadow: 0 30px 80px rgba(138, 43, 226, 0.5);
+                }
+                
+                .close-modal {
+                    position: absolute;
+                    top: 20px;
+                    right: 20px;
+                    width: 50px;
+                    height: 50px;
+                    border-radius: 50%;
+                    background: rgba(255, 255, 255, 0.1);
+                    border: 1px solid rgba(255, 255, 255, 0.2);
+                    color: #fff;
+                    font-size: 1.5rem;
+                    cursor: pointer;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    transition: all 0.3s ease;
+                }
+                
+                .close-modal:hover {
+                    background: rgba(255, 107, 107, 0.3);
+                    border: 1px solid rgba(255, 107, 107, 0.5);
+                    transform: rotate(90deg);
+                }
+                
+                @keyframes fadeIn {
+                    from { opacity: 0; }
+                    to { opacity: 1; }
+                }
+            `;
+            document.head.appendChild(style);
+            
+            // Close modal
+            const closeBtn = modal.querySelector('.close-modal');
+            closeBtn.addEventListener('click', () => {
+                modal.style.animation = 'fadeOut 0.3s ease forwards';
+                setTimeout(() => {
+                    modal.remove();
+                    style.remove();
+                }, 300);
+            });
+            
+            modal.addEventListener('click', (e) => {
+                if (e.target === modal) {
+                    modal.remove();
+                    style.remove();
+                }
+            });
+        });
+    }
+    
+    // Initialize parallax effect
+    function initParallaxEffect() {
+        const shapes = document.querySelectorAll('.bg-shape');
+        const techItems = document.querySelectorAll('.tech-item');
+        
+        window.addEventListener('scroll', () => {
+            const scrolled = window.pageYOffset;
+            const rate = 0.5;
+            
+            shapes.forEach((shape, index) => {
+                const speed = 0.3 + (index * 0.1);
+                const yPos = -(scrolled * speed * rate);
+                shape.style.transform = `translateY(${yPos}px)`;
+            });
+            
+            techItems.forEach((item, index) => {
+                const speed = 0.2 + (index * 0.05);
+                const yPos = -(scrolled * speed * rate);
+                item.style.transform = `translateY(${yPos}px)`;
+            });
+        });
+    }
+    
+    // Initialize tooltips
+    function initTooltips() {
+        // Create tooltip element
+        const tooltip = document.createElement('div');
+        tooltip.className = 'hero-tooltip';
+        document.body.appendChild(tooltip);
+        
+        const elementsWithTooltip = document.querySelectorAll('[data-tooltip]');
+        
+        elementsWithTooltip.forEach(element => {
+            element.addEventListener('mouseenter', function(e) {
+                const tooltipText = this.getAttribute('data-tooltip');
+                if (tooltipText) {
+                    tooltip.textContent = tooltipText;
+                    tooltip.style.opacity = '1';
+                    
+                    const rect = this.getBoundingClientRect();
+                    const tooltipWidth = tooltip.offsetWidth;
+                    
+                    let left = rect.left + (rect.width / 2) - (tooltipWidth / 2);
+                    let top = rect.top - 40;
+                    
+                    // Adjust if tooltip goes off screen
+                    if (left < 10) left = 10;
+                    if (left + tooltipWidth > window.innerWidth - 10) {
+                        left = window.innerWidth - tooltipWidth - 10;
+                    }
+                    
+                    tooltip.style.left = `${left}px`;
+                    tooltip.style.top = `${top}px`;
+                }
+            });
+            
+            element.addEventListener('mouseleave', function() {
+                tooltip.style.opacity = '0';
+            });
+        });
+        
+        // Add tooltip styles
+        const tooltipStyle = document.createElement('style');
+        tooltipStyle.textContent = `
+            .hero-tooltip {
+                position: fixed;
+                background: rgba(20, 20, 40, 0.95);
+                backdrop-filter: blur(10px);
+                border: 1px solid rgba(138, 43, 226, 0.4);
+                border-radius: 8px;
+                padding: 8px 15px;
+                color: #fff;
+                font-size: 0.85rem;
+                z-index: 10000;
+                pointer-events: none;
+                opacity: 0;
+                transform: translateY(10px);
+                transition: all 0.3s ease;
+                box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+                white-space: nowrap;
+            }
+            
+            .hero-tooltip::after {
+                content: '';
+                position: absolute;
+                top: 100%;
+                left: 50%;
+                transform: translateX(-50%);
+                border-width: 6px 6px 0 6px;
+                border-style: solid;
+                border-color: rgba(138, 43, 226, 0.4) transparent transparent transparent;
+            }
+            
+            .icon-ripple {
+                position: fixed;
+                width: 0;
+                height: 0;
+                border-radius: 50%;
+                border: 2px solid rgba(138, 43, 226, 0.3);
+                animation: ripple 1s ease-out;
+                pointer-events: none;
+                z-index: 9998;
+            }
+            
+            @keyframes ripple {
+                0% {
+                    width: 0;
+                    height: 0;
+                    opacity: 1;
+                }
+                100% {
+                    width: 100px;
+                    height: 100px;
+                    opacity: 0;
+                }
+            }
+        `;
+        document.head.appendChild(tooltipStyle);
+    }
+    
+    // Initialize scroll animations
+    function initScrollAnimations() {
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('animate-in');
+                }
+            });
+        }, observerOptions);
+        
+        // Observe hero elements
+        const heroElements = document.querySelectorAll('.hero-content, .hero-image');
+        heroElements.forEach(el => observer.observe(el));
+    }
+    
+    // Add ripple effect for buttons
+    function initButtonRipples() {
+        const buttons = document.querySelectorAll('.action-btn');
+        
+        buttons.forEach(button => {
+            button.addEventListener('click', function(e) {
+                const ripple = document.createElement('span');
+                const rect = this.getBoundingClientRect();
+                const size = Math.max(rect.width, rect.height);
+                const x = e.clientX - rect.left - size / 2;
+                const y = e.clientY - rect.top - size / 2;
+                
+                ripple.style.cssText = `
+                    position: absolute;
+                    border-radius: 50%;
+                    background: rgba(255, 255, 255, 0.3);
+                    transform: scale(0);
+                    animation: button-ripple 0.6s ease-out;
+                    width: ${size}px;
+                    height: ${size}px;
+                    left: ${x}px;
+                    top: ${y}px;
+                    pointer-events: none;
+                `;
+                
+                this.appendChild(ripple);
+                
+                setTimeout(() => ripple.remove(), 600);
+            });
+        });
+        
+        // Add ripple animation
+        const rippleStyle = document.createElement('style');
+        rippleStyle.textContent = `
+            @keyframes button-ripple {
+                to {
+                    transform: scale(4);
+                    opacity: 0;
+                }
+            }
+        `;
+        document.head.appendChild(rippleStyle);
+    }
+    
+    // Run initialization
+    initHeroSection();
+    initScrollAnimations();
+    initButtonRipples();
+    
+    // Add hero section entrance animation
+    setTimeout(() => {
+        heroSection.style.opacity = '1';
+        heroSection.style.transform = 'translateY(0)';
+    }, 100);
+});
