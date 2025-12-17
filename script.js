@@ -508,3 +508,363 @@ document.addEventListener('DOMContentLoaded', function() {
     // Run initialization
     initCertificatesSection();
 });
+
+
+// ============================================
+// TIMELINE SECTION - INTERACTIVE FUNCTIONS
+// ============================================
+
+document.addEventListener('DOMContentLoaded', function() {
+    const timelineItems = document.querySelectorAll('.timeline-item');
+    const timelineLine = document.querySelector('.line-progress');
+    const yearButtons = document.querySelectorAll('.year-btn');
+    const controlButtons = document.querySelectorAll('.control-btn');
+    const statNumbers = document.querySelectorAll('.stat-number');
+    const itemButtons = document.querySelectorAll('.item-btn');
+    
+    let currentFilter = 'all';
+    let currentIndex = 0;
+    let visibleItems = Array.from(timelineItems);
+    
+    // Initialize timeline
+    function initTimeline() {
+        // Set initial visibility
+        checkVisibility();
+        
+        // Initialize stats counter
+        initStatsCounter();
+        
+        // Initialize scroll progress
+        initScrollProgress();
+        
+        // Initialize filter system
+        initFilterSystem();
+        
+        // Initialize control buttons
+        initControlButtons();
+        
+        // Initialize item buttons
+        initItemButtons();
+        
+        // Add scroll event listener
+        window.addEventListener('scroll', checkVisibility);
+    }
+    
+    // Check item visibility
+    function checkVisibility() {
+        const windowHeight = window.innerHeight;
+        const windowTop = window.scrollY;
+        const windowBottom = windowTop + windowHeight;
+        
+        timelineItems.forEach((item, index) => {
+            const itemTop = item.offsetTop;
+            const itemBottom = itemTop + item.offsetHeight;
+            
+            // Check if item is in viewport
+            if (itemBottom >= windowTop && itemTop <= windowBottom) {
+                item.classList.add('visible');
+                
+                // Update progress line
+                const progress = ((index + 1) / timelineItems.length) * 100;
+                timelineLine.style.height = `${progress}%`;
+                
+                // Update current index
+                currentIndex = index;
+            }
+        });
+    }
+    
+    // Initialize stats counter
+    function initStatsCounter() {
+        statNumbers.forEach(stat => {
+            const target = parseInt(stat.getAttribute('data-count'));
+            const duration = 2000;
+            const step = target / (duration / 16);
+            
+            let current = 0;
+            const timer = setInterval(() => {
+                current += step;
+                if (current >= target) {
+                    current = target;
+                    clearInterval(timer);
+                }
+                stat.textContent = Math.floor(current);
+            }, 16);
+        });
+    }
+    
+    // Initialize scroll progress
+    function initScrollProgress() {
+        // Add scroll hint animation
+        const scrollHint = document.querySelector('.timeline-scroll-hint');
+        if (scrollHint) {
+            setTimeout(() => {
+                scrollHint.style.opacity = '0.5';
+            }, 1000);
+            
+            // Hide hint after first scroll
+            window.addEventListener('scroll', function() {
+                if (window.scrollY > 100) {
+                    scrollHint.style.opacity = '0';
+                    setTimeout(() => {
+                        scrollHint.style.display = 'none';
+                    }, 500);
+                }
+            }, { once: true });
+        }
+    }
+    
+    // Initialize filter system
+    function initFilterSystem() {
+        yearButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                // Remove active class from all buttons
+                yearButtons.forEach(btn => btn.classList.remove('active'));
+                
+                // Add active class to clicked button
+                this.classList.add('active');
+                
+                // Get filter value
+                currentFilter = this.getAttribute('data-year');
+                
+                // Filter items
+                timelineItems.forEach(item => {
+                    const itemYear = item.getAttribute('data-year');
+                    
+                    if (currentFilter === 'all' || 
+                        currentFilter === 'future' && item.classList.contains('future') ||
+                        currentFilter === itemYear) {
+                        item.style.display = 'flex';
+                        setTimeout(() => {
+                            item.style.opacity = '0';
+                            item.style.transform = 'translateY(30px)';
+                            setTimeout(() => {
+                                item.classList.add('visible');
+                                item.style.opacity = '1';
+                                item.style.transform = 'translateY(0)';
+                            }, 100);
+                        }, 100);
+                    } else {
+                        item.style.opacity = '0';
+                        item.style.transform = 'translateY(30px)';
+                        setTimeout(() => {
+                            item.style.display = 'none';
+                            item.classList.remove('visible');
+                        }, 300);
+                    }
+                });
+                
+                // Update visible items array
+                updateVisibleItems();
+            });
+        });
+    }
+    
+    // Initialize control buttons
+    function initControlButtons() {
+        const prevBtn = document.querySelector('.prev-btn');
+        const nextBtn = document.querySelector('.next-btn');
+        
+        if (prevBtn && nextBtn) {
+            prevBtn.addEventListener('click', function() {
+                if (currentIndex > 0) {
+                    currentIndex--;
+                    scrollToItem(currentIndex);
+                }
+            });
+            
+            nextBtn.addEventListener('click', function() {
+                if (currentIndex < visibleItems.length - 1) {
+                    currentIndex++;
+                    scrollToItem(currentIndex);
+                }
+            });
+            
+            // Keyboard navigation
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'ArrowLeft') {
+                    if (currentIndex > 0) {
+                        currentIndex--;
+                        scrollToItem(currentIndex);
+                    }
+                } else if (e.key === 'ArrowRight') {
+                    if (currentIndex < visibleItems.length - 1) {
+                        currentIndex++;
+                        scrollToItem(currentIndex);
+                    }
+                }
+            });
+        }
+    }
+    
+    // Initialize item buttons
+    function initItemButtons() {
+        itemButtons.forEach(button => {
+            button.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                const buttonType = this.classList[1];
+                const item = this.closest('.timeline-item');
+                const title = item.querySelector('.item-title').textContent;
+                
+                switch(buttonType) {
+                    case 'view-projects':
+                        // Scroll to projects section
+                        const projectsSection = document.getElementById('projects');
+                        if (projectsSection) {
+                            projectsSection.scrollIntoView({ behavior: 'smooth' });
+                        }
+                        break;
+                        
+                    case 'view-certificate':
+                        // Open certificate modal or scroll to certificates
+                        const certificatesSection = document.getElementById('certificates');
+                        if (certificatesSection) {
+                            certificatesSection.scrollIntoView({ behavior: 'smooth' });
+                            
+                            // Trigger certificate filter if needed
+                            setTimeout(() => {
+                                const certFilter = item.querySelector('.item-type.certification') ? 'all' : null;
+                                if (certFilter) {
+                                    const filterBtn = document.querySelector(`[data-filter="${certFilter}"]`);
+                                    if (filterBtn) filterBtn.click();
+                                }
+                            }, 500);
+                        }
+                        break;
+                        
+                    case 'verify-online':
+                        // Already has link, just track click
+                        trackButtonClick('verify_online', title);
+                        break;
+                        
+                    case 'contact-me':
+                        // Scroll to contact section
+                        const contactSection = document.getElementById('contact');
+                        if (contactSection) {
+                            contactSection.scrollIntoView({ behavior: 'smooth' });
+                        }
+                        break;
+                        
+                    case 'view-skills':
+                        // Scroll to skills section
+                        const skillsSection = document.getElementById('skills');
+                        if (skillsSection) {
+                            skillsSection.scrollIntoView({ behavior: 'smooth' });
+                        }
+                        break;
+                        
+                    case 'view-portfolio':
+                        // Could open image gallery or scroll to projects
+                        const portfolioSection = document.getElementById('projects');
+                        if (portfolioSection) {
+                            portfolioSection.scrollIntoView({ behavior: 'smooth' });
+                        }
+                        break;
+                }
+                
+                // Add click animation
+                const originalHTML = this.innerHTML;
+                this.innerHTML = '<i class="fas fa-check"></i>';
+                this.style.transform = 'scale(0.9)';
+                
+                setTimeout(() => {
+                    this.innerHTML = originalHTML;
+                    this.style.transform = '';
+                }, 1000);
+            });
+        });
+    }
+    
+    // Scroll to specific item
+    function scrollToItem(index) {
+        if (visibleItems[index]) {
+            visibleItems[index].scrollIntoView({
+                behavior: 'smooth',
+                block: 'center'
+            });
+            
+            // Highlight the item
+            visibleItems.forEach(item => item.classList.remove('highlighted'));
+            visibleItems[index].classList.add('highlighted');
+            
+            setTimeout(() => {
+                visibleItems[index].classList.remove('highlighted');
+            }, 2000);
+        }
+    }
+    
+    // Update visible items array
+    function updateVisibleItems() {
+        visibleItems = Array.from(timelineItems).filter(item => 
+            item.style.display !== 'none'
+        );
+        currentIndex = 0;
+    }
+    
+    // Track button clicks (for analytics)
+    function trackButtonClick(action, label) {
+        console.log(`Timeline action: ${action} - ${label}`);
+        // You can integrate with Google Analytics here
+        // gtag('event', 'timeline_click', {
+        //     'event_category': 'engagement',
+        //     'event_label': label,
+        //     'value': action
+        // });
+    }
+    
+    // Add hover effects for markers
+    function initMarkerHover() {
+        timelineItems.forEach(item => {
+            const marker = item.querySelector('.marker-circle');
+            if (marker) {
+                marker.addEventListener('mouseenter', function() {
+                    this.style.transform = 'scale(1.2) rotate(15deg)';
+                });
+                
+                marker.addEventListener('mouseleave', function() {
+                    this.style.transform = 'scale(1) rotate(0)';
+                });
+            }
+        });
+    }
+    
+    // Add CSS for highlighted items
+    const highlightStyle = document.createElement('style');
+    highlightStyle.textContent = `
+        .timeline-item.highlighted .item-content {
+            border: 2px solid #00ffff;
+            box-shadow: 0 0 40px rgba(0, 255, 255, 0.4),
+                        0 30px 80px rgba(0, 0, 0, 0.5) !important;
+            animation: highlight-pulse 2s ease;
+        }
+        
+        @keyframes highlight-pulse {
+            0%, 100% { 
+                border-color: #00ffff;
+                box-shadow: 0 0 40px rgba(0, 255, 255, 0.4);
+            }
+            50% { 
+                border-color: #8a2be2;
+                box-shadow: 0 0 60px rgba(138, 43, 226, 0.6);
+            }
+        }
+    `;
+    document.head.appendChild(highlightStyle);
+    
+    // Run initialization
+    initTimeline();
+    initMarkerHover();
+    
+    // Add parallax effect for background shapes
+    window.addEventListener('scroll', function() {
+        const scrolled = window.pageYOffset;
+        const shapes = document.querySelectorAll('.timeline-shape');
+        
+        shapes.forEach((shape, index) => {
+            const speed = 0.3 + (index * 0.1);
+            const yPos = -(scrolled * speed);
+            shape.style.transform = `translateY(${yPos}px)`;
+        });
+    });
+});
