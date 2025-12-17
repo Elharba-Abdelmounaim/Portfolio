@@ -868,3 +868,512 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 });
+
+
+
+// ============================================
+// SKILLS SECTION - INTERACTIVE FUNCTIONS
+// ============================================
+
+document.addEventListener('DOMContentLoaded', function() {
+    const skillCategories = document.querySelectorAll('.skill-category');
+    const filterButtons = document.querySelectorAll('.skills-filter .filter-btn');
+    const skillItems = document.querySelectorAll('.skill-item');
+    const progressCircles = document.querySelectorAll('.progress-circle');
+    const progressBars = document.querySelectorAll('.progress-fill');
+    let skillsChart = null;
+    
+    // Initialize skills section
+    function initSkillsSection() {
+        // Initialize progress animations
+        initProgressAnimations();
+        
+        // Initialize filter system
+        initSkillsFilter();
+        
+        // Initialize tooltips
+        initTooltips();
+        
+        // Initialize chart
+        initSkillsChart();
+        
+        // Initialize hover effects
+        initHoverEffects();
+        
+        // Initialize click events
+        initClickEvents();
+    }
+    
+    // Initialize progress animations
+    function initProgressAnimations() {
+        // Animate progress bars on scroll
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const progressFill = entry.target;
+                    const width = progressFill.getAttribute('data-width');
+                    
+                    setTimeout(() => {
+                        progressFill.style.width = `${width}%`;
+                    }, 300);
+                    
+                    observer.unobserve(progressFill);
+                }
+            });
+        }, { threshold: 0.5 });
+        
+        progressBars.forEach(bar => observer.observe(bar));
+        
+        // Animate progress circles
+        progressCircles.forEach(circle => {
+            const percent = circle.getAttribute('data-percent');
+            const progress = circle.querySelector('.progress');
+            
+            if (progress) {
+                const circumference = 2 * Math.PI * 15.9155;
+                const offset = circumference - (percent / 100) * circumference;
+                
+                setTimeout(() => {
+                    progress.style.strokeDashoffset = offset;
+                }, 500);
+            }
+        });
+    }
+    
+    // Initialize skills filter
+    function initSkillsFilter() {
+        filterButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                // Remove active class from all buttons
+                filterButtons.forEach(btn => btn.classList.remove('active'));
+                
+                // Add active class to clicked button
+                this.classList.add('active');
+                
+                // Get filter value
+                const filter = this.getAttribute('data-filter');
+                
+                // Filter categories
+                skillCategories.forEach(category => {
+                    const categoryType = category.getAttribute('data-category');
+                    
+                    if (filter === 'all' || filter === categoryType) {
+                        category.style.display = 'block';
+                        setTimeout(() => {
+                            category.style.opacity = '1';
+                            category.style.transform = 'translateY(0)';
+                        }, 100);
+                    } else {
+                        category.style.opacity = '0';
+                        category.style.transform = 'translateY(20px)';
+                        setTimeout(() => {
+                            category.style.display = 'none';
+                        }, 300);
+                    }
+                });
+            });
+        });
+    }
+    
+    // Initialize tooltips
+    function initTooltips() {
+        // Create tooltip element
+        const tooltip = document.createElement('div');
+        tooltip.className = 'skill-tooltip';
+        document.body.appendChild(tooltip);
+        
+        skillItems.forEach(item => {
+            item.addEventListener('mouseenter', function(e) {
+                const tooltipText = this.getAttribute('data-tooltip');
+                if (tooltipText) {
+                    tooltip.textContent = tooltipText;
+                    tooltip.style.opacity = '1';
+                    tooltip.style.transform = 'translateY(0)';
+                    
+                    // Position tooltip
+                    const rect = this.getBoundingClientRect();
+                    const tooltipWidth = tooltip.offsetWidth;
+                    
+                    let left = rect.left + (rect.width / 2) - (tooltipWidth / 2);
+                    let top = rect.top - tooltip.offsetHeight - 10;
+                    
+                    // Adjust if tooltip goes off screen
+                    if (left < 10) left = 10;
+                    if (left + tooltipWidth > window.innerWidth - 10) {
+                        left = window.innerWidth - tooltipWidth - 10;
+                    }
+                    
+                    tooltip.style.left = `${left}px`;
+                    tooltip.style.top = `${top}px`;
+                }
+            });
+            
+            item.addEventListener('mouseleave', function() {
+                tooltip.style.opacity = '0';
+                tooltip.style.transform = 'translateY(10px)';
+            });
+        });
+        
+        // Hide tooltip on scroll
+        window.addEventListener('scroll', function() {
+            tooltip.style.opacity = '0';
+            tooltip.style.transform = 'translateY(10px)';
+        });
+    }
+    
+    // Initialize skills chart
+    function initSkillsChart() {
+        const chartCanvas = document.getElementById('skillsChart');
+        if (!chartCanvas) return;
+        
+        const ctx = chartCanvas.getContext('2d');
+        
+        // Skills data
+        const skillsData = {
+            labels: ['Python', 'C', 'C#', 'Bash', 'Web', 'Docker', 'Git', 'Linux', 'NGINX', 'SQL', 'SketchUp', 'Lumion', 'AutoCAD', 'Photoshop', 'Premiere', 'PowerPoint', 'Word'],
+            datasets: [{
+                label: 'Skill Level',
+                data: [60, 70, 40, 65, 80, 85, 90, 95, 70, 75, 65, 80, 85, 80, 70, 95, 98],
+                backgroundColor: [
+                    '#06d6a0', '#06d6a0', '#ffd166', '#06d6a0', '#118ab2',
+                    '#118ab2', '#118ab2', '#ef476f', '#06d6a0', '#06d6a0',
+                    '#06d6a0', '#118ab2', '#118ab2', '#118ab2', '#06d6a0',
+                    '#ef476f', '#ef476f'
+                ],
+                borderColor: 'rgba(255, 255, 255, 0.1)',
+                borderWidth: 1,
+                borderRadius: 5,
+                hoverBackgroundColor: [
+                    '#0af7b6', '#0af7b6', '#ffe0a3', '#0af7b6', '#1ab2e8',
+                    '#1ab2e8', '#1ab2e8', '#ff6b8b', '#0af7b6', '#0af7b6',
+                    '#0af7b6', '#1ab2e8', '#1ab2e8', '#1ab2e8', '#0af7b6',
+                    '#ff6b8b', '#ff6b8b'
+                ]
+            }]
+        };
+        
+        // Create chart
+        skillsChart = new Chart(ctx, {
+            type: 'bar',
+            data: skillsData,
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        display: false
+                    },
+                    tooltip: {
+                        backgroundColor: 'rgba(20, 20, 40, 0.9)',
+                        titleColor: '#fff',
+                        bodyColor: '#fff',
+                        borderColor: 'rgba(138, 43, 226, 0.4)',
+                        borderWidth: 1,
+                        callbacks: {
+                            label: function(context) {
+                                return `${context.label}: ${context.raw}%`;
+                            }
+                        }
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        max: 100,
+                        grid: {
+                            color: 'rgba(255, 255, 255, 0.1)'
+                        },
+                        ticks: {
+                            color: 'rgba(255, 255, 255, 0.7)',
+                            callback: function(value) {
+                                return value + '%';
+                            }
+                        }
+                    },
+                    x: {
+                        grid: {
+                            display: false
+                        },
+                        ticks: {
+                            color: 'rgba(255, 255, 255, 0.7)',
+                            maxRotation: 45,
+                            minRotation: 45
+                        }
+                    }
+                },
+                animation: {
+                    duration: 2000,
+                    easing: 'easeOutQuart'
+                }
+            }
+        });
+        
+        // Update chart on filter
+        filterButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                const filter = this.getAttribute('data-filter');
+                updateChartData(filter);
+            });
+        });
+    }
+    
+    // Update chart data based on filter
+    function updateChartData(filter) {
+        if (!skillsChart) return;
+        
+        let filteredData = [...skillsChart.data.datasets[0].data];
+        let filteredLabels = [...skillsChart.data.labels];
+        let filteredColors = [...skillsChart.data.datasets[0].backgroundColor];
+        let filteredHoverColors = [...skillsChart.data.datasets[0].hoverBackgroundColor];
+        
+        if (filter !== 'all') {
+            // Define which skills belong to which category
+            const categories = {
+                programming: [0, 1, 2, 3, 4], // Python, C, C#, Bash, Web
+                devops: [5, 6, 7, 8, 9], // Docker, Git, Linux, NGINX, SQL
+                design: [10, 11, 12, 13, 14, 15, 16] // SketchUp to Word
+            };
+            
+            const indicesToKeep = categories[filter] || [];
+            
+            filteredData = filteredData.filter((_, index) => indicesToKeep.includes(index));
+            filteredLabels = filteredLabels.filter((_, index) => indicesToKeep.includes(index));
+            filteredColors = filteredColors.filter((_, index) => indicesToKeep.includes(index));
+            filteredHoverColors = filteredHoverColors.filter((_, index) => indicesToKeep.includes(index));
+        }
+        
+        skillsChart.data.datasets[0].data = filteredData;
+        skillsChart.data.labels = filteredLabels;
+        skillsChart.data.datasets[0].backgroundColor = filteredColors;
+        skillsChart.data.datasets[0].hoverBackgroundColor = filteredHoverColors;
+        skillsChart.update();
+    }
+    
+    // Initialize hover effects
+    function initHoverEffects() {
+        skillItems.forEach(item => {
+            item.addEventListener('mouseenter', function() {
+                const stars = this.querySelectorAll('.skill-stars i');
+                stars.forEach((star, index) => {
+                    setTimeout(() => {
+                        star.style.transform = 'scale(1.3)';
+                        setTimeout(() => {
+                            star.style.transform = 'scale(1)';
+                        }, 200);
+                    }, index * 100);
+                });
+                
+                // Pulse animation for progress circle
+                const progressValue = this.querySelector('.progress-value');
+                if (progressValue) {
+                    progressValue.style.transform = 'translate(-50%, -50%) scale(1.2)';
+                    progressValue.style.color = '#8a2be2';
+                }
+            });
+            
+            item.addEventListener('mouseleave', function() {
+                const progressValue = this.querySelector('.progress-value');
+                if (progressValue) {
+                    progressValue.style.transform = 'translate(-50%, -50%) scale(1)';
+                    progressValue.style.color = '#fff';
+                }
+            });
+        });
+    }
+    
+    // Initialize click events
+    function initClickEvents() {
+        skillItems.forEach(item => {
+            item.addEventListener('click', function() {
+                // Get skill details
+                const skillName = this.querySelector('h4').textContent;
+                const skillLevel = this.querySelector('.progress-value').textContent;
+                const skillDesc = this.querySelector('.skill-desc').textContent;
+                
+                // Show skill details modal or alert
+                showSkillDetails(skillName, skillLevel, skillDesc);
+                
+                // Add click animation
+                this.style.transform = 'scale(0.95)';
+                setTimeout(() => {
+                    this.style.transform = '';
+                }, 300);
+            });
+        });
+    }
+    
+    // Show skill details
+    function showSkillDetails(name, level, description) {
+        // Create modal or use existing one
+        const modal = document.createElement('div');
+        modal.className = 'skill-modal glass-modal';
+        modal.innerHTML = `
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3>${name}</h3>
+                    <button class="modal-close">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="skill-level-display">
+                        <div class="level-label">Proficiency Level</div>
+                        <div class="level-value">${level}</div>
+                        <div class="level-bar">
+                            <div class="level-fill" style="width: ${level}"></div>
+                        </div>
+                    </div>
+                    <div class="skill-description">
+                        <h4>Description</h4>
+                        <p>${description}</p>
+                    </div>
+                    <div class="skill-projects">
+                        <h4>Related Projects</h4>
+                        <p>Check my projects section to see this skill in action.</p>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn-primary view-projects">
+                        <i class="fas fa-eye"></i> View Projects
+                    </button>
+                    <button class="btn-secondary close-modal">Close</button>
+                </div>
+            </div>
+        `;
+        
+        document.body.appendChild(modal);
+        
+        // Add styles for modal
+        const style = document.createElement('style');
+        style.textContent = `
+            .skill-modal {
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: rgba(0, 0, 0, 0.8);
+                backdrop-filter: blur(10px);
+                z-index: 99999;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                opacity: 0;
+                animation: fadeIn 0.3s ease forwards;
+            }
+            
+            @keyframes fadeIn {
+                to { opacity: 1; }
+            }
+            
+            .skill-modal .modal-content {
+                background: rgba(20, 20, 50, 0.95);
+                backdrop-filter: blur(30px);
+                border: 1px solid rgba(138, 43, 226, 0.4);
+                border-radius: 25px;
+                padding: 30px;
+                max-width: 500px;
+                width: 90%;
+                box-shadow: 0 30px 80px rgba(0, 0, 0, 0.5);
+                transform: scale(0.9);
+                animation: scaleIn 0.3s ease forwards;
+            }
+            
+            @keyframes scaleIn {
+                to { transform: scale(1); }
+            }
+        `;
+        document.head.appendChild(style);
+        
+        // Show modal
+        setTimeout(() => modal.style.display = 'flex', 10);
+        
+        // Close modal handlers
+        const closeButtons = modal.querySelectorAll('.modal-close, .close-modal');
+        closeButtons.forEach(btn => {
+            btn.addEventListener('click', function() {
+                modal.style.animation = 'fadeOut 0.3s ease forwards';
+                modal.querySelector('.modal-content').style.animation = 'scaleOut 0.3s ease forwards';
+                
+                setTimeout(() => {
+                    modal.remove();
+                    style.remove();
+                }, 300);
+            });
+        });
+        
+        // View projects button
+        const viewProjectsBtn = modal.querySelector('.view-projects');
+        viewProjectsBtn.addEventListener('click', function() {
+            const projectsSection = document.getElementById('projects');
+            if (projectsSection) {
+                projectsSection.scrollIntoView({ behavior: 'smooth' });
+                modal.remove();
+                style.remove();
+            }
+        });
+        
+        // Close on outside click
+        modal.addEventListener('click', function(e) {
+            if (e.target === this) {
+                this.remove();
+                style.remove();
+            }
+        });
+    }
+    
+    // Run initialization
+    initSkillsSection();
+    
+    // Add skill level indicators
+    function addSkillLevelIndicators() {
+        skillItems.forEach(item => {
+            const level = parseInt(item.getAttribute('data-level'));
+            const levelText = ['Beginner', 'Intermediate', 'Advanced', 'Expert', 'Master'][level - 1] || 'Beginner';
+            
+            const levelIndicator = document.createElement('div');
+            levelIndicator.className = 'skill-level-indicator';
+            levelIndicator.textContent = levelText;
+            levelIndicator.style.background = getLevelColor(level);
+            
+            item.appendChild(levelIndicator);
+        });
+    }
+    
+    function getLevelColor(level) {
+        const colors = {
+            1: 'linear-gradient(135deg, #ff6b6b, #ff8e8e)',
+            2: 'linear-gradient(135deg, #ffd166, #ffe0a3)',
+            3: 'linear-gradient(135deg, #06d6a0, #0af7b6)',
+            4: 'linear-gradient(135deg, #118ab2, #1ab2e8)',
+            5: 'linear-gradient(135deg, #8a2be2, #9400d3)'
+        };
+        return colors[level] || colors[1];
+    }
+    
+    // Add level indicators CSS
+    const levelStyle = document.createElement('style');
+    levelStyle.textContent = `
+        .skill-level-indicator {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            padding: 3px 8px;
+            border-radius: 10px;
+            font-size: 0.7rem;
+            font-weight: 600;
+            color: white;
+            opacity: 0.8;
+            transition: all 0.3s ease;
+        }
+        
+        .skill-item:hover .skill-level-indicator {
+            opacity: 1;
+            transform: scale(1.1);
+        }
+    `;
+    document.head.appendChild(levelStyle);
+    
+    // Add level indicators
+    addSkillLevelIndicators();
+});
